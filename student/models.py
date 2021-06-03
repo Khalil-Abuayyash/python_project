@@ -35,6 +35,7 @@ class Day(models.Model):
     lunch = models.CharField(max_length=255, default='')
     date = models.DateField(default=datetime.today())
 
+
 class Class(models.Model):
     stack = models.ForeignKey(Stack, on_delete=CASCADE)
     section = models.ForeignKey(Section, on_delete=CASCADE)
@@ -61,7 +62,7 @@ class UserAssignment(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=CASCADE)
     user = models.ForeignKey(User, on_delete=CASCADE)
     hardness = models.IntegerField()
-    code_review = models.TextField()
+    code_review = models.TextField() # it will not filled by the user it will be blank when i get the user rating or coomplain from the assignment
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, )
     updated_at = models.DateTimeField(auto_now=True, )
@@ -82,7 +83,34 @@ class Event(models.Model):
     instructor = models.ForeignKey(User, related_name='created_events', on_delete=CASCADE)
     students = models.ManyToManyField(User, related_name='attended_events')
     day = models.ForeignKey(Day, related_name='events', on_delete=CASCADE)
+    attend = models.CharField(max_length=255,default="optional")
     created_at = models.DateTimeField(auto_now_add=True, )
     updated_at = models.DateTimeField(auto_now=True, )
 
+
+def update_user(data,id,pw_hash):
+    user = User.objects.get(id=id)
+    user.first_name = data["first_name"]
+    user.last_name = data["last_name"]
+    user.email = data["email"]
+    user.password = pw_hash
+    user.phone_number = data["phone_number"]
+    user.save()
+    
+def create_userAssignment(data,id):
+    user = User.objects.get(id=id)
+    UserAssignment.objects.create(assignment=data["assignment"],user=user,hardness=data["hardness"],code_review="",comment=data["comment"])
+
+def create_request(data,id):
+    user = User.objects.et(id=id)
+    Request.objects.create(desc=data["brackout"],user=user, votes=0)
+
+def create_Event(data,id):
+    instructor = User.objects.get(id=id)
+    today = Day.objects.get(date=datetime.today())
+    Event.objects.create(title=data["title"],date=data["date"],start_time=data["start_time"],end_time=data["end_time"],type=data["type"],instructor=instructor,day=today,attend=data["attend"])
+
+def delete_request(id):
+    selected_request = Request.objects.get(id=id)
+    selected_request.delete()
 

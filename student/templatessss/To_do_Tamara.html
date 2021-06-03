@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>base</title>
+
+</head>
+<body>
+    <form action="/update_user" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Update Information">
+    </form>
+    <h2>today.stack</h2>
+    <h2>today.name</h2>
+    <h2>today.date</h2>
+    <h2>Today Schedule </h2>
+        <p>9:00-10:00 Algorithm: {{ today.algo }} </p>
+        <p>10:00-11:00 Discussion: {{ today.discussion }} </p>
+        <p>11:00-12:00 Discussion: {{ today.group_activity }} </p>
+        <p>12:00-01:00 Discussion: {{ today.lunch }} </p>
+        <ol>
+        {% for x in today.assignments.all %}
+            <li>{{x}}</li>
+        {% endfor %}
+        </ol>
+        <ol>
+            {% for j in Event %}
+            {% j.attend == "optional" %}
+                <li>{{i.start_time}}-{{i.end_time}} {{j.type.category}}: {{j.title}}</li>
+                {% endif %}
+            {% endfor %}
+            </ol>
+        <p>05:00-06:00 Discussion: {{ today.night_study }} </p>
+    <h2>Breakout / Event :</h2>
+    <table>
+        <th>Event</th>
+        <th>S-Time</th>
+        <th>E-Time</th>
+        <th>Event Type</th>
+        {% for i in Event %}
+            <td> i.start_time </td>
+            <td> i.end_time </td>
+            <td> i.type.category </td>
+            {% if i.attend == "optional" %}
+            <td> i.attend </td>
+            {% endif %}
+        {% endfor %}
+    </table>
+</body>
+</html>

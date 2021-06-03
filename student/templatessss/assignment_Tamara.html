@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/assignment_add_data" method="POST">
+        <select name="day">
+            {% for i in day %}
+            <option value="{{ i.name }}"> {{ i.name }}</option>
+            {% endfor %}
+        </select>
+        <p> Section: {{ section.name }}</p>
+        <select name="stack">
+            {% for x in stack %}
+            <option value="{{ x.name }}"> {{ x.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="assignment">
+            {% for j in assignment %}
+            <option value="{{ j.name }}"> {{ j.name }}</option>
+            {% endfor %}
+        </select>
+        <p> {{selected_assignment.name}} </p>
+        Hardness: 
+        <select name="hardness">
+            {% for j in range %}
+            <option value="{{j}}"> {{j}}</option>
+            {% endfor %}
+        </select>
+        <label> Do You need breakout session ?</label>
+        <input type="radio" name="yes"> Yes 
+        <input type="radio" name="No"> No
+        Struggling in: <textarea name="comment"></textarea>
+
+        solved: <input type="checkbox" name="solved">
+
+        <input type="submit" value="Submit">
+    
+    </form>
+</body>
+</html>
