@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="assi.css" />
+    <title>Assignment</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1>AXSOS ACADEMY</h1>
+      <nav class="navbar navbar-default">
+        <div>
+          <ul class="nav nav-tabs nav-justified" role="tablist">
+            <li><a href="#">To Do</a></li>
+            <li><a href="#">Assignment</a></li>
+            <li><a href="#">Request</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="profile">
+            <h3>Name:</h3>
+            <h3>ID:</h3>
+            <h3>Mobile:</h3>
+            <button><a href="#">Update Info</a></button>
+          </div>
+          <div class="activity">
+            <p>Section:</p>
+            <p>Attendance:</p>
+            <p>Lates:</p>
+            <p>Points:</p>
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <label for="day">Day</label>
+          <select name="day" id="day">
+            <option value="one">1</option>
+            <option value="two">2</option>
+            <option value="three">3</option>
+            <option value="four">4</option>
+          </select>
+
+          <p class="para">Section :_________</p>
+          <label for="stack">stack</label>
+          <select name="stack" id="stack">
+            <option value="web-funds">web-funds</option>
+            <option value="python">python2</option>
+            <option value="java">java</option>
+            <option value="mern">mern</option>
+          </select>
+          <p class="paro">Instructor:_________</p>
+          <h3 class="header">Assignment:</h3>
+
+          <select name="" id="">
+            <option value="one">1</option>
+            <option value="two">2</option>
+            <option value="three">3</option>
+            <option value="four">4</option>
+          </select>
+          <h3>Hardness</h3>
+          <div class="slidecontainer">
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value="10"
+              class="slider"
+              id="myRange"
+            />
+            <p>Value: <span id="demo"></span></p>
+          </div>
+          <p class="mohsen">Do You Need A Breakout-Session?</p>
+
+          <input type="radio" id="yes" name="breakout" value="yes" />
+          <label for="yes">Yes</label><br />
+          <input type="radio" id="no" name="breakout" value="no" />
+          <label for="no">No</label><br />
+          <h3>Struggling In:</h3>
+          <textarea name="" id="" cols="60" rows="3"></textarea>
+          <div class="d-flex">
+            <div class="p-2">Solved</div>
+            <div class="d-inline"><input type="checkbox" id="" /></div>
+          </div>
+          <button type="submit" id="zemo">Submit</button>
+        </div>
+        <div class="col-sm-4">
+            <h2 class="sameer">Code Review:</h2>
+          
+        </div>
+      </div>
+    </div>
+    <script>
+      var slider = document.getElementById("myRange");
+      var output = document.getElementById("demo");
+      output.innerHTML = slider.value;
+
+      slider.oninput = function () {
+        output.innerHTML = this.value;
+      };
+    </script>
+  </body>
+</html>
