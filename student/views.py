@@ -9,3 +9,6 @@ def header(request):
 
 def sidebar(request):
     return render(request, 'sidebar.html')
+
+def edit(request, id):
+    return render(request, 'edit_profile.html')
