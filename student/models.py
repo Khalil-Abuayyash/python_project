@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 from login.models import *
+from datetime import datetime
 
 class Request(models.Model):
     desc = models.CharField(max_length=255)
@@ -23,6 +24,17 @@ class Stack(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, )
     updated_at = models.DateTimeField(auto_now=True, )
 
+
+class Day(models.Model):
+    stack = models.ForeignKey(Stack, related_name='days', on_delete=CASCADE)
+    name = models.CharField(max_length=255, default='day')
+    algo = models.CharField(max_length=255, default='')
+    night_study = models.CharField(max_length=255, default='')
+    group_activity = models.CharField(max_length=255, default='')
+    discussion = models.CharField(max_length=255, default='')
+    lunch = models.CharField(max_length=255, default='')
+    date = models.DateField(default=datetime.today())
+
 class Class(models.Model):
     stack = models.ForeignKey(Stack, on_delete=CASCADE)
     section = models.ForeignKey(Section, on_delete=CASCADE)
@@ -41,6 +53,7 @@ class Assignment(models.Model):
         through='UserAssignment',
         through_fields=('assignment' ,'user' ),
     )
+    day = models.ForeignKey(Day, related_name='assignments', on_delete=CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, )
     updated_at = models.DateTimeField(auto_now=True, )
 
@@ -63,10 +76,12 @@ class EventCategory(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateField()
-    time = models.TimeField()
+    start_time = models.TimeField(default=datetime.now())
+    end_time = models.TimeField()
     type = models.ForeignKey(EventCategory, related_name='events', on_delete=CASCADE)
     instructor = models.ForeignKey(User, related_name='created_events', on_delete=CASCADE)
     students = models.ManyToManyField(User, related_name='attended_events')
+    day = models.ForeignKey(Day, related_name='events', on_delete=CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, )
     updated_at = models.DateTimeField(auto_now=True, )
 
