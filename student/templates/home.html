@@ -10,21 +10,14 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="style.css" />
     <title>HomePage</title>
+    {% load render_partial %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
   </head>
   <body>
     <div class="container-fluid">
-      <h1>AXSOS ACADEMY</h1>
-      <nav class="navbar navbar-default">
-        <div>
-          <ul class="nav nav-tabs nav-justified" role="tablist">
-            <li><a href="">To Do</a></li>
-            <li><a href="assignment.html">Assignment</a></li>
-            <li><a href="#">Request</a></li>
-          </ul>
-        </div>
-      </nav>
+      {% render_partial 'header' %}
       <div class="row">
         <div class="col-sm-3">
           <div class="profile">
@@ -44,6 +37,17 @@
         </div>
         <div class="col-sm-5">
             <h2>Today Schedule:</h2>
+            <p>9:00-9:50 Algorith Session: {{day.algo}}</p>
+            <p>disscussion</p>
+            <p>
+              <ul>
+                <li>authot</li>
+                <li>book</li>
+                <li></li>
+                <li></li>
+              </ul>
+            </p>
+
             <table class="table table-bordered">
                 <thead>
                     <tr>
