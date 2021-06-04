@@ -62,7 +62,7 @@ class UserAssignment(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=CASCADE)
     user = models.ForeignKey(User, on_delete=CASCADE)
     hardness = models.IntegerField()
-    code_review = models.TextField() # it will not filled by the user it will be blank when i get the user rating or coomplain from the assignment
+    code_review = models.TextField(default='') # it will not filled by the user it will be blank when i get the user rating or coomplain from the assignment
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, )
     updated_at = models.DateTimeField(auto_now=True, )
@@ -97,12 +97,19 @@ def update_user(data,id,pw_hash):
     user.phone_number = data["phone_number"]
     user.save()
     
-def create_userAssignment(data,id):
+
+def choose_events(id,event_id):
     user = User.objects.get(id=id)
-    UserAssignment.objects.create(assignment=data["assignment"],user=user,hardness=data["hardness"],code_review="",comment=data["comment"])
+    selected_event = user.attended_events.get(id=event_id)
+    selected_event.attend = "mandatory"
+
+def user_event(id):
+    user = User.objects.get(id=id)
+    return user.attended_events.filter(date=datetime.today()) #a date can have many events
 
 def create_request(data,id):
-    user = User.objects.et(id=id)
+    # we should have a type of valudation for the user in case he add an already existed suggition
+    user = User.objects.get(id=id)
     Request.objects.create(desc=data["brackout"],user=user, votes=0)
 
 def create_Event(data,id):
@@ -113,4 +120,21 @@ def create_Event(data,id):
 def delete_request(id):
     selected_request = Request.objects.get(id=id)
     selected_request.delete()
+
+def create_userAssignment(data,user_id):
+    user = User.objects.get(id=id)
+    assignment = Assignment.objects.get(id=data['assigment_id'])
+
+    try :
+        UserAssignment.objects.get(assignment=assignment, user=user)
+        
+
+    except:
+        UserAssignment.objects.create(
+                            assignment=assignment,user=user,hardness=data["hardness"],
+                            comment=data["comment"]
+                            )
+
+
+
 
