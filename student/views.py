@@ -19,8 +19,6 @@ def edit(request, id):
     return render(request, 'edit_profile.html')
 
 
-
-
 def home(request):
     today = Day.objects.get(date=datetime.today())
     context = {
@@ -79,7 +77,7 @@ def request_brackout(request):
 
 def vote(request):
     selected_request = Request.objects.get(id=int(request.post["request"]))
-    selected_request.votes += 1
+    int(selected_request.votes) += 1
     selected_request.save()
     return redirect("/show_request")
 
