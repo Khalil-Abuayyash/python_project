@@ -7,10 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/assignment_add_data" method="POST">
+    <form action="/selected_assignment" method="POST">
         <select name="day">
             {% for i in day %}
             <option value="{{ i.name }}"> {{ i.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="day">
+            {% for i in day %}
+            <option value="{{ i.date }}"> {{ i.date}}</option>
             {% endfor %}
         </select>
         <p> Section: {{ section.name }}</p>
@@ -19,27 +24,22 @@
             <option value="{{ x.name }}"> {{ x.name }}</option>
             {% endfor %}
         </select>
-        <select name="assignment">
-            {% for j in assignment %}
-            <option value="{{ j.name }}"> {{ j.name }}</option>
-            {% endfor %}
-        </select>
-        <p> {{selected_assignment.name}} </p>
-        Hardness: 
-        <select name="hardness">
-            {% for j in range %}
-            <option value="{{j}}"> {{j}}</option>
-            {% endfor %}
-        </select>
-        <label> Do You need breakout session ?</label>
-        <input type="radio" name="yes"> Yes 
-        <input type="radio" name="No"> No
-        Struggling in: <textarea name="comment"></textarea>
-
-        solved: <input type="checkbox" name="solved">
-
-        <input type="submit" value="Submit">
-    
+        <input type="submit" value="Assignment">
+    </form>
+    <form action="/assignment_review" method="POST">
+        {% for assignment,userAssignment in assignment_dict.items %}
+            <p> {{assignment.name}} </p>
+            Hardness: 
+            <select name="hardness" value='{{userAssignment.hardness}}'>
+                {% for num in range %}
+                <option value="{{num}}"> {{num}}</option>
+                {% endfor %}
+            </select>
+            Struggling in: <input name="comment" value="{{userAssignment.comment}}">
+            solved: <input type="checkbox" name="solved" value="{{userAssignment.solved}}">
+            <input type="hidden" name="assignment_id" value="{{assignment.id}}">
+            <input type="submit" value="Submit">
+        {% endfor %}
     </form>
 </body>
 </html>

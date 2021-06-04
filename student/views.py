@@ -91,7 +91,7 @@ def delete_user_request(request,id):
 
 #************************************************************************************************
 # Home page - assignment page
-
+#the below 3 function is for the user to display their assigments and rate them
 def assignment(request,id):
     
     day = Day.objects.get(date=datetime.today())
@@ -121,13 +121,21 @@ def assignment(request,id):
     }
     return render(request,"assigment_Tamara.html",context)
 
-def selected_assignment(request):
+def selected_assignment(request):# we might use ajax for this
     request.session["selected_stack"] = request.POST["stack"]
     return redirect(str(request.session["di"])+"/assignments")
 
 def assignment_review(request):
     create_userAssignment(request.POST,request.session["id"])
     return redirect(str(request.session["di"])+"/assignments")
+
+#the below 3 function is for the instructer to display students assignments
+def students_progress(request):
+    context = {
+        "stacks":Stack.objects.all(),
+        "sections":Section.objects.all(),
+        }
+    return render(request,"students_progress.html",context)
 
 
 

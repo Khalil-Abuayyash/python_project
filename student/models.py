@@ -126,9 +126,10 @@ def create_userAssignment(data,user_id):
     assignment = Assignment.objects.get(id=data['assigment_id'])
 
     try :
-        UserAssignment.objects.get(assignment=assignment, user=user)
-        
-
+        user_assignment = UserAssignment.objects.get(assignment=assignment, user=user)
+        user_assignment.hardness = data["hardness"]
+        user_assignment.comment = data["comment"]
+        user_assignment.save()
     except:
         UserAssignment.objects.create(
                             assignment=assignment,user=user,hardness=data["hardness"],
