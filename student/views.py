@@ -77,7 +77,7 @@ def request_brackout(request):
 
 def vote(request):
     selected_request = Request.objects.get(id=int(request.post["request"]))
-    int(selected_request.votes) += 1
+    selected_request.votes += 1
     selected_request.save()
     return redirect("/show_request")
 

@@ -15,14 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 from login.models import User
 from student.models import *
 
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', include('login.urls')),
-    path('login', include('login.urls')),
+    path('', lambda request : redirect('/login')),
+    path('login/', include('login.urls')),
     path('students/', include('student.urls')),
     
 ]

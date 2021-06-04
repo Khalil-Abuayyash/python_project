@@ -32,18 +32,19 @@
                 </ul>
                 <div class="tab-content">
                     <div id="student" class="tab-pane fade in active">
-                        <form class="form-horizontal" action="/action_page.php">
+                        <form class="form-horizontal" action="/login/create_student" method="POST">
+                            {% csrf_token %}
                             <div class="form-group">
-                                <label class="control-label col-sm-4" for="fname">First Name:</label>
+                                <label class="control-label col-sm-4" for="first_name">First Name:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="fname" />
+                                    <input type="text" class="form-control" id="first_name" placeholder="Enter First Name" name="first_name" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-4" for="lname">Last Name:</label>
+                                <label class="control-label col-sm-4" for="last_name">Last Name:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="lname" placeholder="Enter Last Name"
-                                        name="lname" />
+                                    <input type="text" class="form-control" id="last_name" placeholder="Enter Last Name"
+                                        name="last_name" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -64,14 +65,14 @@
                                 <label class="control-label col-sm-5" for="phone">Phone Number:</label>
                                 <div class="col-sm-6">
                                     <input type="number" class="form-control" id="phone" placeholder="Enter Phone Number"
-                                        name="phone" />
+                                        name="phone_number" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-4" for="idnum">ID:</label>
+                                <label class="control-label col-sm-4" for="idnum">Badge-ID:</label>
                                 <div class="col-sm-7">
                                     <input type="number" class="form-control" id="idnum" placeholder="Enter ID"
-                                        name="idnum" />
+                                        name="badge_id" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -84,18 +85,19 @@
                         </form>
                     </div>
                     <div id="instructor" class="tab-pane fade">
-                        <form class="form-horizontal" action="/action_page.php">
+                        <form class="form-horizontal" action="/login/create_instructor" method="POST">
+                            {% csrf_token %}
                             <div class="form-group">
-                                <label class="control-label col-sm-4" for="fname">First Name:</label>
+                                <label class="control-label col-sm-4" for="first_name">First Name:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="fname" />
+                                    <input type="text" class="form-control" id="first_name" placeholder="Enter First Name" name="first_name" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-4" for="lname">Last Name:</label>
+                                <label class="control-label col-sm-4" for="last_name">Last Name:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="lname" placeholder="Enter Last Name"
-                                        name="lname" />
+                                    <input type="text" class="form-control" id="last_name" placeholder="Enter Last Name"
+                                        name="last_name" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -116,20 +118,20 @@
                                 <label class="control-label col-sm-5" for="phone">Phone Number:</label>
                                 <div class="col-sm-6">
                                     <input type="number" class="form-control" id="phone" placeholder="Enter Phone Number"
-                                        name="phone" />
+                                        name="phone_number" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-4" for="idnum">ID:</label>
                                 <div class="col-sm-7">
                                     <input type="number" class="form-control" id="idnum" placeholder="Enter ID"
-                                        name="idnum" />
+                                        name="badge_id" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-4" for="code">Passing Code:</label>
                                 <div class="col-sm-7">
-                                    <input type="number" class="form-control" id="code" placeholder="Enter Passing Code"
+                                    <input type="text" class="form-control" id="code" placeholder="Enter Passing Code"
                                         name="code" />
                                 </div>
                             </div>
@@ -146,12 +148,13 @@
             </div>
             <div class="col-sm-6 two">
                 <h1>Login</h1>
-                <form class="form-horizontal" action="/action_page.php">
+                <form class="form-horizontal" action="/login/logging" method="POST">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="email_id">Email/ID:</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="email_id" placeholder="Enter Email/ID"
-                                name="email_id" />
+                                name="email" />
                         </div>
                     </div>
                     <div class="form-group">
