@@ -21,9 +21,8 @@ from student.models import *
 
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', lambda request : redirect('/login')),
     path('login/', include('login.urls')),
     path('students/', include('student.urls')),
-    
 ]
