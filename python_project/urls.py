@@ -1,5 +1,5 @@
+  
 """python_project URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
 Examples:
@@ -21,5 +21,8 @@ from student.models import *
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', include('student.urls'))
+    path('', include('login.urls')),
+    path('login', include('login.urls')),
+    path('students/', include('student.urls')),
+    
 ]
