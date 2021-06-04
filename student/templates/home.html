@@ -11,9 +11,124 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>HomePage</title>
-    {% load render_partial %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% load render_partial %} {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <style>
+      .timeline {
+        border-left: 3px solid #727cf5;
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+        background: rgba(114, 124, 245, 0.09);
+        margin: 0 auto;
+        letter-spacing: 0.2px;
+        position: relative;
+        line-height: 1.4em;
+        font-size: 1.03em;
+        padding: 50px;
+        list-style: none;
+        text-align: left;
+        max-width: 40%;
+      }
+
+      @media (max-width: 767px) {
+        .timeline {
+          max-width: 98%;
+          padding: 25px;
+        }
+      }
+
+      .timeline h1 {
+        font-weight: 300;
+        font-size: 1.4em;
+      }
+
+      .timeline h2,
+      .timeline h3 {
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+
+      .timeline .event {
+        border-bottom: 1px dashed #e8ebf1;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        position: relative;
+      }
+
+      @media (max-width: 767px) {
+        .timeline .event {
+          padding-top: 30px;
+        }
+      }
+
+      .timeline .event:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+      }
+
+      .timeline .event:before,
+      .timeline .event:after {
+        position: absolute;
+        display: block;
+        top: 0;
+      }
+
+      .timeline .event:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+      }
+
+      @media (max-width: 767px) {
+        .timeline .event:before {
+          left: 0px;
+          text-align: left;
+        }
+      }
+
+      .timeline .event:after {
+        -webkit-box-shadow: 0 0 0 3px #1d1e31;
+        box-shadow: 0 0 0 3px #aab0e2;
+        left: -55.8px;
+        background: #fff;
+        border-radius: 50%;
+        height: 9px;
+        width: 9px;
+        content: "";
+        top: 5px;
+      }
+
+      @media (max-width: 767px) {
+        .timeline .event:after {
+          left: -31.8px;
+        }
+      }
+
+      .rtl .timeline {
+        border-left: 0;
+        text-align: right;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+        border-right: 3px solid #727cf5;
+      }
+
+      .rtl .timeline .event::before {
+        left: 0;
+        right: -170px;
+      }
+
+      .rtl .timeline .event::after {
+        left: 0;
+        right: -55.8px;
+      }
+    </style>
   </head>
   <body>
     <div class="container-fluid">
@@ -24,103 +139,73 @@
             <h3>Name:</h3>
             <h3>ID:</h3>
             <h3>Mobile:</h3>
-            <button><a href="#">Update Info</a></button>
           </div>
           <div class="activity">
-              <p>Section:</p>
-              <p>Attendance:</p>
-              <p>Lates:</p>
-              <p>Points:</p>
-
-
+            <p>Section:</p>
+            <p>Attendance:</p>
+            <p>Lates:</p>
+            <p>Points:</p>
           </div>
         </div>
         <div class="col-sm-5">
-            <h2>Today Schedule:</h2>
-            <p>9:00-9:50 Algorith Session: {{day.algo}}</p>
-            <p>disscussion</p>
-            <p>
-              <ul>
-                <li>authot</li>
-                <li>book</li>
-                <li></li>
-                <li></li>
-              </ul>
-            </p>
-
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Test</th>
-                        <th>Test</th>
-                        <th>Test</th>
-                        <th>Test</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Adele</td>
-                        <td>Adele</td>
-                        <td>Adele</td>
-                        <td>Adele</td>
-                    </tr>
-                    <tr>
-                        <td>Baraa</td>
-                        <td>Baraa</td>
-                        <td>Baraa</td>
-                        <td>Baraa</td>
-                    </tr>
-                    <tr>
-                        <td>Help</td>
-                        <td>Help</td>
-                        <td>Help</td>
-                        <td>Help</td>
-                    </tr>
-                    <tr>
-                        <td>Adam</td>
-                        <td>Adam</td>
-                        <td>Adam</td>
-                        <td>Adam</td>
-                    </tr>
-                    <tr>
-                        <td>Lets</td>
-                        <td>Lets</td>
-                        <td>Lets</td>
-                        <td>Lets</td>
-                    </tr>
-                    <tr>
-                        <td>Try</td>
-                        <td>Try</td>
-                        <td>Try</td>
-                        <td>Try</td>
-                    </tr>
-                </tbody>
-            </table>
+          <h2>Today Schedule:</h2>
+          <div class="row">
+            <h6 class="card-title"></h6>
+            <ul class="timeline">
+              <li class="event" data-date="09:00 - 9:50am">
+                <h3>Algorithm</h3>
+                <p>About</p>
+              </li>
+              <li class="event" data-date="10:00 - 10:50am">
+                <h3>Discussion</h3>
+                <p>About</p>
+              </li>
+              <li class="event" data-date="11:00 - 11:50am">
+                <h3>Group Activity</h3>
+                <p>About</p>
+              </li>
+              <li class="event" data-date="12:00 - 1:00pm">
+                <h3>Lunch</h3>
+                <p>Meal Name</p>
+              </li>
+              <li class="event" data-date="01:00 - 05:00pm">
+                <h3>Deep Coding</h3>
+                <p>About</p>
+              </li>
+              <li class="event" data-date="05:00 - 06:00pm">
+                <h3>Tech Talk</h3>
+                <p>About</p>
+              </li>
+              <li class="event" data-date="06:00pm -">
+                <h3>Night Study</h3>
+                <p>About</p>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="col-sm-4">
-            <h2>Breakout / Events:</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Attend</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Adele</td>
-                        <td>Adele</td>
-                        <td>Optional</td>
-                    </tr>
-                    <tr>
-                        <td>Baraa</td>
-                        <td>Baraa</td>
-                        <td>Mandatory</td>
-                    </tr>
-                </tbody>
-            </table>
-            <button><a href="#">Log out</a></button>
+          <h2>Breakout / Events:</h2>
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Attend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Adele</td>
+                <td>Adele</td>
+                <td>Optional</td>
+              </tr>
+              <tr>
+                <td>Baraa</td>
+                <td>Baraa</td>
+                <td>Mandatory</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

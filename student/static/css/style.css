@@ -19,6 +19,7 @@ h1 {
 ul,.navbar{
     /* background-color: rgb(30, 203, 255); */
 }
+
 .row{
     /* background-color: snow; */
 }
@@ -32,24 +33,27 @@ a:link, a:visited, a:active{
     text-decoration: none;
 }
 .col-sm-5, .col-sm-3, .col-sm-4{
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    height: 600px;
+    border: 1px solid black;
+    height: 100%;
     border-radius: 8px;
 
 }
 .profile{
     border: 1px solid black;
-    padding: 10px;
+    padding: 2%;
     border-radius: 8px;
-    margin-top: 1px;
+    margin-top: 1%;
 }
 .activity{
     border: 1px solid black;
-    padding: 10px;
+    padding: 1%;
     border-radius: 8px;
-    margin-top: 90px;
+    margin-top: 2%;
 }
 td:hover, td:active{
     /* background-color: rgb(211, 218, 231); */
 }
+nav{
+    padding-right: 1%;
+}
+
