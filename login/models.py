@@ -101,14 +101,19 @@ def create_instructor(postData):
 def get_user_details(email):
     try :
         user = User.objects.get(email=email)
-        role = user.role
+        user.role.id
+        if user.role.id == 1:
+            role = 'student'
+        elif user.role.id == 2:
+            role = 'instructor'
+
         user_details = {
             'first_name': user.first_name,
             'last_name': user.last_name,
             'email': user.email,
             'badge_id': user.badge_id,
             'phone_number': user.phone_number,
-            'role': user.role,
+            'role': role
             # 'created_at': user.created_at,
             # 'updated_at': user.updated_at,
         }
