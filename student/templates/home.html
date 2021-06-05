@@ -14,6 +14,9 @@
     {% load render_partial %} {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <style>
+      .activity{
+        border-top: 2px solid black;
+      }
       .timeline {
         border-left: 3px solid #727cf5;
         border-bottom-right-radius: 4px;
@@ -134,7 +137,7 @@
     <div class="container-fluid">
       {% render_partial 'header' %}
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="profile">
             <h3>Name:</h3>
             <h3>ID:</h3>

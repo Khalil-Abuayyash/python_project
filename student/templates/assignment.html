@@ -41,60 +41,47 @@
           </div>
         </div>
         <div class="col-sm-5">
-          <form>
-            
-          <label for="day">Day</label>
-          <select name="day" id="day">
-            <option value="one">1</option>
-            <option value="two">2</option>
-            <option value="three">3</option>
-            <option value="four">4</option>
-          </select>
+          <div class="col-sm-5">
+            <form action="" method="POST">
 
-          <p class="para">Section :_________</p>
-          <label for="stack">stack</label>
-          <select name="stack" id="stack">
-            <option value="web-funds">web-funds</option>
-            <option value="python">python2</option>
-            <option value="java">java</option>
-            <option value="mern">mern</option>
-          </select>
-          <p class="paro">Instructor:_________</p>
-          <h3 class="header">Assignment:</h3>
+                <label for="day">Day</label>
+                <select name="day" id="day">
+                  <option selected>Day</option>
+                    <option value="one">1</option>
+                    <option value="two">2</option>
+                    <option value="three">3</option>
+                    <option value="four">4</option>
+                </select>
 
-          <select name="" id="">
-            <option value="one">1</option>
-            <option value="two">2</option>
-            <option value="three">3</option>
-            <option value="four">4</option>
-          </select>
-          <h3>Hardness</h3>
-          <div class="slidecontainer">
-            <input
-              type="range"
-              min="1"
-              max="10"
-              value="10"
-              class="slider"
-              id="myRange"
-            />
-            <p>Value: <span id="demo"></span></p>
-          </div>
-          <p class="mohsen">Do You Need A Breakout-Session?</p>
+                <p class="para">Section :_________</p>
+                <label for="stack">stack</label>
+                <select name="stack" id="stack">
+                  <option selected>Stack</option>
+                    <option value="web-funds">web-funds</option>
+                    <option value="python">python2</option>
+                    <option value="java">java</option>
+                    <option value="mern">mern</option>
+                </select>
+                <p class="paro">Instructor:_________</p>
+                <h3 class="header">Assignment:</h3>
 
-          <input type="radio" id="yes" name="breakout" value="yes" />
-          <label for="yes">Yes</label><br />
-          <input type="radio" id="no" name="breakout" value="no" />
-          <label for="no">No</label><br />
-          <h3>Struggling In:</h3>
-          <textarea name="" id="" cols="60" rows="3"></textarea>
-          <div class="d-flex">
-            <div class="p-2">Solved</div>
-            <div class="d-inline"><input type="checkbox" id="" /></div>
-          </div>
-          <button type="submit" id="zemo">Submit</button>
-        </div>
-          </form>
+                <h3>Hardness</h3>
+                <p>Do You Need A Breakout-Session?</p>
+
+                <input type="radio" id="yes" name="breakout" value="yes" />
+                <label for="yes">Yes</label><br />
+                <input type="radio" id="no" name="breakout" value="no" />
+                <label for="no">No</label><br />
+                <h3>Struggling In:</h3>
+                <textarea name="" id="" cols="60" rows="3"></textarea>
+                <p>
+                    <label for="status">Solved: </label>
+                    <input type="checkbox" name="status" id="status">
+                </p>
+                <p>
+                    <button type="submit" class="btn btn-success btn-lg">Submit</button>
+                </p>
+            </form>
         <div class="col-sm-4">
             <h2 class="sameer">Code Review:</h2>
             <p></p>
