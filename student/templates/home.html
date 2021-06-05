@@ -15,9 +15,40 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <style>
+      .profile{
+        padding-top: 30%;
+        padding-bottom: 20%;
+        padding-left:12%;
+        border: 1px outset black;
+        border-radius: 8px;
+        box-shadow: 2px 2px black;
+        background-color: #f2f3fe;
+      }
       .activity{
         border-top: 2px solid black;
+        padding-top: 30%;
+        padding-bottom: 20%;
+        padding-left:12%;
+        border: 1px outset black;
+        border-radius: 8px;
+        box-shadow: 2px 2px black;
+        margin-top: 2%;
       }
+      .col-sm-2, .col-sm-4{
+        border-right: 1px outset black ;
+        border-radius: 8px;
+        box-shadow: 2px 2px black;
+        margin-right:1%;
+      }
+      .col-sm-5{
+        border-left: 1px outset black ;
+        border-radius: 8px;
+        box-shadow: 2px 2px black;
+        margin-left:1%;
+
+      }
+
+
       .timeline {
         border-left: 3px solid #727cf5;
         border-bottom-right-radius: 4px;
@@ -140,9 +171,9 @@
       <div class="row">
         <div class="col-sm-2">
           <div class="profile">
-            <h3>Name: {{user.first_name}} {{user.last_name}}</h3>
-            <h3>Badge_ID: {{user.badge_id}}</h3>
-            <h3>Mobile: {{user.phone_number}}</h3>
+            <h4>Name: {{user.first_name}} {{user.last_name}}</h4>
+            <h4>Badge_ID: {{user.badge_id}}</h4>
+            <h4>Mobile: {{user.phone_number}}</h4>
           </div>
           <div class="activity">
             <p>Section:</p>
