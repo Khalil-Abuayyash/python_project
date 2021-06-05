@@ -1,0 +1,11 @@
+.col-sm-3{
+    border-right: 1px solid black;
+    height: 700px;
+}
+.col-sm-4{
+    border-left: 1px solid black;
+    height: 700px;
+}
+.form-control{
+    width: 20%;
+}

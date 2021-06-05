@@ -10,7 +10,7 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="assi.css" />
+    <link rel="stylesheet" href="assignment_1.css" />
     <title>Assignment</title>
   </head>
   <body>
@@ -44,44 +44,51 @@
           <div class="col-sm-5">
             <form action="" method="POST">
 
-                <label for="day">Day</label>
-                <select name="day" id="day">
+              <label for="day">Day</label>
+              <select class="form-control" name="day" id="day">
                   <option selected>Day</option>
-                    <option value="one">1</option>
-                    <option value="two">2</option>
-                    <option value="three">3</option>
-                    <option value="four">4</option>
-                </select>
+                  <option value="one">1</option>
+                  <option value="two">2</option>
+                  <option value="three">3</option>
+                  <option value="four">4</option>
+              </select>
 
-                <p class="para">Section :_________</p>
-                <label for="stack">stack</label>
-                <select name="stack" id="stack">
+              <p class="para">Section :_________</p>
+              <label for="stack">Stack</label>
+              <select class="form-control" name="stack" id="stack">
                   <option selected>Stack</option>
-                    <option value="web-funds">web-funds</option>
-                    <option value="python">python2</option>
-                    <option value="java">java</option>
-                    <option value="mern">mern</option>
-                </select>
-                <p class="paro">Instructor:_________</p>
-                <h3 class="header">Assignment:</h3>
+                  <option value="web-funds">web-funds</option>
+                  <option value="python">python2</option>
+                  <option value="java">java</option>
+                  <option value="mern">mern</option>
+              </select>
+              <p class="paro">Instructor:_________</p>
+              <h3 class="header">Assignment:</h3>
 
-                <h3>Hardness</h3>
-                <p>Do You Need A Breakout-Session?</p>
+              <label for="hardness">Hardness: </label>
+              <select class="form-control" id="hardness" name="hardness" aria-label="Default select example">
+                  <option value="easy">Easy</option>
+                  <option value="normal">Normal</option>
+                  <option value="difficult">Difficult</option>
+              </select>
 
-                <input type="radio" id="yes" name="breakout" value="yes" />
-                <label for="yes">Yes</label><br />
-                <input type="radio" id="no" name="breakout" value="no" />
-                <label for="no">No</label><br />
-                <h3>Struggling In:</h3>
-                <textarea name="" id="" cols="60" rows="3"></textarea>
-                <p>
-                    <label for="status">Solved: </label>
-                    <input type="checkbox" name="status" id="status">
-                </p>
-                <p>
-                    <button type="submit" class="btn btn-success btn-lg">Submit</button>
-                </p>
-            </form>
+              <p>Do You Need A Breakout-Session?</p>
+
+              <input type="radio" id="yes" name="breakout" value="yes" />
+              <label for="yes">Yes</label><br />
+              <input type="radio" id="no" name="breakout" value="no" />
+              <label for="no">No</label><br />
+              <h3>Struggling In:</h3>
+              <textarea name="" id="" cols="60" rows="3"></textarea>
+              <p>
+                  <label for="status">Solved: </label>
+                  <input type="checkbox" name="status" id="status">
+              </p>
+              <p>
+                  <button type="submit" class="btn btn-success btn-lg">Submit</button>
+              </p>
+          </form>
+          </div>
         <div class="col-sm-4">
             <h2 class="sameer">Code Review:</h2>
             <p></p>
@@ -90,14 +97,5 @@
         </div>
       </div>
     </div>
-    <script>
-      var slider = document.getElementById("myRange");
-      var output = document.getElementById("demo");
-      output.innerHTML = slider.value;
-
-      slider.oninput = function () {
-        output.innerHTML = this.value;
-      };
-    </script>
   </body>
 </html>
