@@ -1,0 +1,102 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+li:hover,
+li:active {
+  background-color: aquamarine;
+}
+li,
+a {
+  font-family: cursive;
+  text-decoration: springgreen;
+}
+h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+.container-fluid {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 0, 0, 0),
+    rgba(255, 0, 0, 1)
+  );
+}
+ul,
+.navbar {
+  background-color: rgb(30, 203, 255);
+}
+.row {
+  background-color: snow;
+}
+a:link,
+a:visited,
+a:active {
+  text-decoration: none;
+}
+.col-sm-5,
+.col-sm-3,
+.col-sm-4 {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  height: 600px;
+  border-radius: 8px;
+}
+.profile {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 1px;
+}
+.activity {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 90px;
+}
+td:hover,
+td:active {
+  background-color: rgb(211, 218, 231);
+}
+.para {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
+label,
+select {
+  margin-left: 10px;
+}
+.paro {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 30px;
+}
+.header {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 30px;
+}
+.mohsen {
+  margin-top: 8%;
+}
+.d-flex{
+
+    display: flex;
+  
+}
+.d-inline{
+    margin-left:1%;
+}
+#zemo{
+   margin-top:10%;
+   margin-left:90%;
+   
+}
+.sameer{
+    margin-left: 30%;
+}
+.raw7i{
+    margin-left: 40%;
+    margin-top: 50%;
+
+}

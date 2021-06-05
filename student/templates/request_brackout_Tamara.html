@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {#  in case the current user is student ... #}
+    {% if user.role.type == 1 %}
+    <form action="/request_brackout" method="POST">
+        <textarea name="brackout"></textarea>
+        <input type="submit" value="Request Brackout Session">
+    </form>
+    <h2>Brackout Session Suggestion</h2>
+    {% for i in request %}
+        <p>{{ i.desc }}</p>
+        <p>Votes: {{ i.votes }}</p>
+        <form action="vote" method="POST">
+            <input type="hidden" name="request" value="i.id">
+            <input type="submit" value="Vote">
+        </form>
+    {% endfor %}
+    {% endif %}
+
+    {#  in case the current user is instructor ... #}
+    {% if user.role.type == 2 %}
+    <h2> Create brackout session: </h2>
+    <form action="/create_brackout_session" method="POST">
+        Titel: <input type="text" name="title">
+        Types: <input type="text" name="type">
+        Date: <input type="date" name="date">
+        Start Time: <input type="time" name="start_time">
+        End Time: <input type="time" name="end_time">
+        Attend: <input type="text" name="attend">
+        <input type="hidden" name="event" value="brackout session">
+        <input type="submit" value="Create">
+    </form>
+    {% for x in brackout%}
+    {% if x.votes > 10 %}
+    <p> {{ x.desc }}</p>
+    <p> {{ x.votes }}</p>
+    {% endif %}
+    <form action="/delete/{{i.id}}" method="POST">
+        <input type="submit" value="Delete">
+    </form>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/selected_assignment" method="POST">
+        <select name="day">
+            {% for i in day %}
+            <option value="{{ i.name }}"> {{ i.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="day">
+            {% for i in day %}
+            <option value="{{ i.date }}"> {{ i.date}}</option>
+            {% endfor %}
+        </select>
+        <p> Section: {{ section.name }}</p>
+        <select name="stack">
+            {% for x in stack %}
+            <option value="{{ x.name }}"> {{ x.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Assignment">
+    </form>
+    <form action="/assignment_review" method="POST">
+        {% for assignment,userAssignment in assignment_dict.items %}
+            <p> {{assignment.name}} </p>
+            Hardness: 
+            <select name="hardness" value='{{userAssignment.hardness}}'>
+                {% for num in range %}
+                <option value="{{num}}"> {{num}}</option>
+                {% endfor %}
+            </select>
+            Struggling in: <input name="comment" value="{{userAssignment.comment}}">
+            solved: <input type="checkbox" name="solved" value="{{userAssignment.solved}}">
+            <input type="hidden" name="assignment_id" value="{{assignment.id}}">
+            <input type="submit" value="Submit">
+        {% endfor %}
+    </form>
+</body>
+<!-- شىغفاهىل -->
+</html>

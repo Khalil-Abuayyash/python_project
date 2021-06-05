@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Edit</title>
+    {% load render_partial %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+</head>
+
+<body>
+    {% render_partial 'header' %}
+    <table  class="table table-sm">
+        <form action="">
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" class="form-control" ></td>
+                <td>Last Name:</td>
+                <td><input type="text"  class="form-control"></td>
+                
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="email"  class="form-control"></td>
+                <td>Confirm Email:</td>
+                <td><input type="email" name="" id=""  class="form-control"></td>
+                <td><button type="submit" class="btn btn-primary">Update Profile</button></td>
+                
+            </tr>
+            <tr>
+                <td>Mobile-Number:</td>
+                <td><input type="text"  class="form-control"></td>
+                <td>Bagde Id</td>
+                <td><input type="text"  class="form-control"></td>
+                
+            </tr>
+        </form>
+        <form>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password"  class="form-control"></td>
+                <td>Confirm Password:</td>
+                <td><input type="password"  class="form-control"></td>
+                <td><button type="submit" class="btn btn-danger">Change password</button></td>
+                
+            </tr>
+        </form>
+    </table>
+</body>
+</html>
