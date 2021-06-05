@@ -78,7 +78,7 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateField()
     start_time = models.TimeField(default=datetime.now())
-    end_time = models.TimeField()
+    end_time = models.TimeField(default=datetime.now())
     type = models.ForeignKey(EventCategory, related_name='events', on_delete=CASCADE)
     instructor = models.ForeignKey(User, related_name='created_events', on_delete=CASCADE)
     students = models.ManyToManyField(User, related_name='attended_events')
@@ -104,9 +104,9 @@ def choose_events(id,event_id):
     selected_event.attend = "mandatory"
     selected_event.save()
 
-def user_event(id):
+def user_event(id,day):
     user = User.objects.get(id=id)
-    return user.attended_events.filter(date=datetime.today()) #a date can have many events
+    return user.attended_events.filter(date=day.date) #a date can have many events
 
 def create_request(data,id):
     # we should have a type of valudation for the user in case he add an already existed suggition

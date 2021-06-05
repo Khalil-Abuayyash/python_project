@@ -11,7 +11,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>HomePage</title>
-    {% load render_partial %} {% load static %}
+    {% load render_partial %}
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <style>
       .activity{
@@ -139,15 +140,15 @@
       <div class="row">
         <div class="col-sm-2">
           <div class="profile">
-            <h3>Name:</h3>
-            <h3>ID:</h3>
-            <h3>Mobile:</h3>
+            <h3>Name: {{user.first_name}} {{user.last_name}}</h3>
+            <h3>Badge_ID: {{user.badge_id}}</h3>
+            <h3>Mobile: {{user.phone_number}}</h3>
           </div>
           <div class="activity">
             <p>Section:</p>
-            <p>Attendance:</p>
-            <p>Lates:</p>
-            <p>Points:</p>
+            <p>Absences: {{user.absences}} Days</p>
+            <p>Lates: {{user.lates}}</p>
+            <p>Points: {{user.points}}</p>
           </div>
         </div>
         <div class="col-sm-5">
@@ -156,32 +157,38 @@
             <h6 class="card-title"></h6>
             <ul class="timeline">
               <li class="event" data-date="09:00 - 9:50am">
-                <h3>Algorithm</h3>
-                <p>About</p>
+                <h3>Algorithm Session:</h3>
+                <p>{{today.algo}}</p>
               </li>
               <li class="event" data-date="10:00 - 10:50am">
-                <h3>Discussion</h3>
-                <p>About</p>
+                <h3>Discussion:</h3>
+                <p>{{today.discussion}}</p>
               </li>
               <li class="event" data-date="11:00 - 11:50am">
                 <h3>Group Activity</h3>
-                <p>About</p>
+                <p>{{today.group_activity}}</p>
               </li>
               <li class="event" data-date="12:00 - 1:00pm">
                 <h3>Lunch</h3>
-                <p>Meal Name</p>
+                <p>{{today.lunch}}</p>
               </li>
               <li class="event" data-date="01:00 - 05:00pm">
-                <h3>Deep Coding</h3>
-                <p>About</p>
-              </li>
-              <li class="event" data-date="05:00 - 06:00pm">
-                <h3>Tech Talk</h3>
-                <p>About</p>
+                <h3>Lab Hours:</h3>
+                <h5>Assignments:</h5>
+                {% for assignment in today.assignments.all %}
+                  <h6>{{assignment.name}}</h6>
+                {% endfor %}
+                <h5>Events:</h5>
+                {% for event in user_events %}
+                  {% if event.attend == "optional" %}
+                    <h6>{{event.start_time}}-{{event.end_time}} {{event.type.category}}: {{event.title}}</h6>
+                  {% endif %}
+                {% endfor %}
+                
               </li>
               <li class="event" data-date="06:00pm -">
                 <h3>Night Study</h3>
-                <p>About</p>
+                <p>{{today.night_study}}</p>
               </li>
             </ul>
           </div>
@@ -193,20 +200,19 @@
               <tr>
                 <th>Start Time</th>
                 <th>End Time</th>
+                <th>Type</th>
                 <th>Attend</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Adele</td>
-                <td>Adele</td>
-                <td>Optional</td>
-              </tr>
-              <tr>
-                <td>Baraa</td>
-                <td>Baraa</td>
-                <td>Mandatory</td>
-              </tr>
+              {% for event in user_events %}
+                <tr>
+                  <td>{{event.start_time}}</td>
+                  <td>{{event.end_time}}</td>
+                  <td>{{event.type.category}}</td>
+                  <td>{{event.attend}}</td>
+                </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>

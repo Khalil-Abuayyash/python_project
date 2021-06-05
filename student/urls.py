@@ -17,7 +17,9 @@ urlpatterns = [
     path('assignment_review',views.assignment_review),
     path('students_progress',views.students_progress),
 
+
+
     # path('<int:id>/edit', views.edit),
-    # url('header', views.header, name='header'),
+    url('header', views.header, name='header'),
     # url('sidebar', views.sidebar, name='sidebar'),
 ]
