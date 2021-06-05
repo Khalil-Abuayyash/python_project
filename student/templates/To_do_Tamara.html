@@ -8,6 +8,14 @@
 
 </head>
 <body>
+    <form action="requests" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Request">
+    </form>
+    <form action="{{request.session.id}}/assignments" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Assignments">
+    </form>
     <form action="/update_user" method="POST">
         {% csrf_token %}
         <input type="submit" value="Update Information">
@@ -26,8 +34,8 @@
         {% endfor %}
         </ol>
         <ol>
-            {% for j in Event %}
-            {% j.attend == "optional" %}
+            {% for j in user_events %}
+            {% j.attend == "mandatory" %}
                 <li>{{i.start_time}}-{{i.end_time}} {{j.type.category}}: {{j.title}}</li>
                 {% endif %}
             {% endfor %}
@@ -40,11 +48,18 @@
         <th>E-Time</th>
         <th>Event Type</th>
         {% for i in Event %}
+        {% if i.attend == "optional" %}
             <td> i.start_time </td>
             <td> i.end_time </td>
             <td> i.type.category </td>
-            {% if i.attend == "optional" %}
             <td> i.attend </td>
+            <td>
+                <form action="choose_event" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="event_id" value="{{i.id}}">
+                    <input type="submit" value="I want to attend">
+                </form>
+            </td>
             {% endif %}
         {% endfor %}
     </table>

@@ -7,21 +7,24 @@
     <title>Document</title>
 </head>
 <body>
+    {#  in case the current user is student ... #}
     {% if user.role.type == 1 %}
     <form action="/request_brackout" method="POST">
         <textarea name="brackout"></textarea>
         <input type="submit" value="Request Brackout Session">
     </form>
     <h2>Brackout Session Suggestion</h2>
-    {% for i in request%}
+    {% for i in request %}
         <p>{{ i.desc }}</p>
         <p>Votes: {{ i.votes }}</p>
-        <form action="/vote" method="POST">
+        <form action="vote" method="POST">
             <input type="hidden" name="request" value="i.id">
             <input type="submit" value="Vote">
         </form>
     {% endfor %}
     {% endif %}
+
+    {#  in case the current user is instructor ... #}
     {% if user.role.type == 2 %}
     <h2> Create brackout session: </h2>
     <form action="/create_brackout_session" method="POST">

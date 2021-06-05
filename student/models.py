@@ -102,6 +102,7 @@ def choose_events(id,event_id):
     user = User.objects.get(id=id)
     selected_event = user.attended_events.get(id=event_id)
     selected_event.attend = "mandatory"
+    selected_event.save()
 
 def user_event(id):
     user = User.objects.get(id=id)
