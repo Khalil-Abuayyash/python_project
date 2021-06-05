@@ -97,7 +97,7 @@ def delete_user_request(request,id):
 # Home page - assignment page
 #the below 3 function is for the user to display their assigments and rate them
 def assignment(request,id):
-    
+    request.session["url_id"] = id
     day = Day.objects.get(date=datetime.today())
     if 'day' in request.POST:
         day = Day.objects.get(name=request.POST['day'], stack=day.stack)
@@ -107,7 +107,7 @@ def assignment(request,id):
     c = Class.objects.get(user=user,stack=stack)
     section = c.section # it will be one section can i reach it without all()
     selected_satck = Stack.objects.get(name=request.session["selected_stack"])
-    selected_assignment = Assignment.objects.get(name=request.POST["assignment"])
+    # selected_assignment = Assignment.objects.get(name=request.POST["assignment"])
     assignments =  day.assignments.all()
     assignment_dict={}
     for assignment in assignments:
@@ -121,25 +121,34 @@ def assignment(request,id):
         'assignment_dict': assignment_dict,
         # "assignments": selected_satck.assignments.all(),
         # "selected_assignment":selected_assignment,
-        "range":range(1,11)
+        "range":range(1,11),
+        "current_user": User.objects.get(id=request.session["id"]),
+        "selected_student": user,
     }
     return render(request,"assigment_Tamara.html",context)
 
 def selected_assignment(request):# we might use ajax for this
     request.session["selected_stack"] = request.POST["stack"]
-    return redirect(str(request.session["di"])+"/assignments")
+    return redirect(str(request.session["id"])+"/assignments")
 
 def assignment_review(request):
     create_userAssignment(request.POST,request.session["id"])
-    return redirect(str(request.session["di"])+"/assignments")
+    return redirect(str(request.session["url_id"])+"/assignments")
 
 #the below 3 function is for the instructer to display students assignments
 def students_progress(request):
     context = {
         "stacks":Stack.objects.all(),
         "sections":Section.objects.all(),
+        "selected_students": student_list(request.session["stack"],request.POST["section"])#check it it will not work
         }
     return render(request,"students_progress.html",context)
+
+def choose_students(request):
+    request.session["stack_students"] = request.POST["stack"]
+    request.session["section_students"] = request.POST["section"]
+    # student_list(request.POST["stack"],request.POST["section"])
+    return redirect ("students_progress")
 
 
 

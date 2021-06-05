@@ -124,7 +124,12 @@ def delete_request(id):
 
 def create_userAssignment(data,user_id):
     user = User.objects.get(id=id)
+    codeReview = UserAssignment.objects.get(assignment=data["assignment.id"])
     assignment = Assignment.objects.get(id=data['assigment_id'])
+    if "code_review" in data:
+        user_assignment = UserAssignment.objects.get(assignment=codeReview, user=user)
+        user_assignment.code_review = data["code_review"]
+        user_assignment.save()
 
     try :
         user_assignment = UserAssignment.objects.get(assignment=assignment, user=user)
@@ -136,6 +141,10 @@ def create_userAssignment(data,user_id):
                             assignment=assignment,user=user,hardness=data["hardness"],
                             comment=data["comment"]
                             )
+
+def student_list(stack,section):
+    selceted_class = Class.objects.get(stack=stack,section=section)
+    return selceted_class.users.all()
 
 
 

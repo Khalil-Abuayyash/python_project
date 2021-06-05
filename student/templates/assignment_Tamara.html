@@ -7,25 +7,27 @@
     <title>Document</title>
 </head>
 <body>
+
     <form action="/selected_assignment" method="POST">
         <select name="day">
             {% for i in day %}
             <option value="{{ i.name }}"> {{ i.name }}</option>
             {% endfor %}
         </select>
-        <select name="day">
-            {% for i in day %}
-            <option value="{{ i.date }}"> {{ i.date}}</option>
-            {% endfor %}
-        </select>
+        {% if current_user.role.id == 1 %}
         <p> Section: {{ section.name }}</p>
         <select name="stack">
             {% for x in stack %}
             <option value="{{ x.name }}"> {{ x.name }}</option>
             {% endfor %}
         </select>
+        {% endif %}
+        {% if current_user.role.id == 2 %}
+        <p> Section: {{ request.session.section_students }}</p>
+        {% endif %}
         <input type="submit" value="Assignment">
     </form>
+    {% if current_user.role.id == 1 %}
     <form action="/assignment_review" method="POST">
         {% for assignment,userAssignment in assignment_dict.items %}
             <p> {{assignment.name}} </p>
@@ -41,6 +43,25 @@
             <input type="submit" value="Submit">
         {% endfor %}
     </form>
+    {% endif %}
+    {% if current_user.role.id == 2 %}
+    <p>{{selected_student.first_name}} {{selected_student.last_name}}</p>
+    
+        {% for assignment,userAssignment in assignment_dict.items %}
+            <p> {{assignment.name}} </p>
+            <p> {{userAssignment.hardness}}</p>
+            {% if userAssignment.UserAssignment.is_solved %}
+                <p>Solved</p>
+            {% else %}
+                <p>Not Solved</p>
+            {% endif %}
+            <form action="/assignment_review" method="POST">
+            Code Review: <input type="text" name="code_review" value="{{userAssignment.code_review}}">
+            <input type="hidden" name="studentAssignment_id" value="{{assignment.id}}">
+            <input type="submit" value="Submit">
+            </form>
+        {% endfor %}
+    
+    {% endif %}
 </body>
-<!-- شىغفاهىل -->
 </html>

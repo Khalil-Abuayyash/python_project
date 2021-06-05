@@ -16,6 +16,8 @@ urlpatterns = [
     path('selected_assignment',views.selected_assignment),
     path('assignment_review',views.assignment_review),
     path('students_progress',views.students_progress),
+    path('choose_students',views.choose_students),
+
 
 
 
