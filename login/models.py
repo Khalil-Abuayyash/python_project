@@ -66,6 +66,9 @@ class User(models.Model):
     badge_id = models.IntegerField(default=0)
     phone_number = models.CharField(max_length=255,default='')
     role = models.ForeignKey(Role, related_name='users', on_delete=CASCADE)
+    absences = models.IntegerField(default=0)
+    lates = models.IntegerField(default=0)
+    points = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManger()
@@ -108,6 +111,7 @@ def get_user_details(email):
             role = 'instructor'
 
         user_details = {
+            'id': user.id,
             'first_name': user.first_name,
             'last_name': user.last_name,
             'email': user.email,

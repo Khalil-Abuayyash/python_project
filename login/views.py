@@ -59,7 +59,7 @@ def logging_in(request):
             for key, value in user_details.items():
                 request.session[key] = value
             messages.success(request, "Logged in successfully")
-            return redirect("/")
+            return redirect("/students/todo")
 
 def logout(request):
     request.session.clear()

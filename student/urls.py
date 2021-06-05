@@ -18,6 +18,6 @@ urlpatterns = [
     path('students_progress',views.students_progress),
 
     # path('<int:id>/edit', views.edit),
-    # url('header', views.header, name='header'),
+    url('header', views.header, name='header'),
     # url('sidebar', views.sidebar, name='sidebar'),
 ]

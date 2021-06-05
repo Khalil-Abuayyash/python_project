@@ -9,8 +9,8 @@ from datetime import datetime
 # def index(request):
 #     return render(request, 'home.html')
 
-# def header(request):
-#     return render(request, 'header.html')
+def header(request):
+    return render(request, 'header.html')
 
 # def sidebar(request):
 #     return render(request, 'sidebar.html')
@@ -21,18 +21,22 @@ from datetime import datetime
 #************************************************************************************************
 # Home page - to do page
 def to_do(request):
-    today = Day.objects.get(date=datetime.today()) #make suer from the format from the models and today() they should match
+    try :
+        today = Day.objects.get(date=datetime.today()) 
+    except:
+        today = Day.objects.last()
     # if not match we can use
     # settings.py set DATE_INPUT_FORMATS 
     # DATE_INPUT_FORMATS = ['%d-%m-%Y']
-    today_events = Event.objects.filter(date=datetime.today())
+    # today_events = Event.objects.filter(date=datetime.today())
     print(today)
     context = {
+        'user': User.objects.get(id=request.session['id']),
         "today": today,
         # "Event": Event.objects.filter(date=datetime.today()), #today.events.all(),
-        "user_events": user_event(request.session["id"]),
+        "user_events": user_event(request.session["id"],today),
     }
-    return render(request,"To_do_Tamara.html",context)
+    return render(request,"home.html",context)
 
 def show_update_user(request):
     return render(request, "update.html")
