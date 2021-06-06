@@ -48,7 +48,7 @@
                   <h6>{{assignment.name}}</h6>
                 {% endfor %}
                 <h5>Events:</h5>
-                {% for event in user_events %}
+                {% for event in events %}
                   {% if event.attend == "mandatory" or user.role.id == 2 %}
                     <h6>{{event.start_time}}-{{event.end_time}} {{event.type.category}}: {{event.title}}</h6>
                   {% endif %}
@@ -62,39 +62,41 @@
             </ul>
           </div>
         </div>
-        <div class="col-sm-4">
-          <h2>Breakout / Events:</h2>
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Type</th>
-                <th>Attend</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for event in user_events %}
+        {% if user.role.id == 1 %}
+          <div class="col-sm-4">
+            <h2>Breakout / Events:</h2>
+            <table class="table table-bordered table-hover">
+              <thead>
                 <tr>
-                  <td>{{event.start_time}}</td>
-                  <td>{{event.end_time}}</td>
-                  <td>{{event.type.category}}</td>
-                  <td>{{event.attend}}</td>
-                  <td>
-                    {% if event.attend == "optional" %}
-                      <form action="choose_event" method="POST">
-                          {% csrf_token %}
-                          <input type="hidden" name="event_id" value="{{event.id}}">
-                          <input type="submit" value="I want to attend">
-                      </form>
-                    {% endif %}
-                </td>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Type</th>
+                  <th>Attend</th>
+                  <th></th>
                 </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {% for event in events %}
+                  <tr>
+                    <td>{{event.start_time}}</td>
+                    <td>{{event.end_time}}</td>
+                    <td>{{event.type.category}}</td>
+                    <td>{{event.attend}}</td>
+                    <td>
+                      {% if event.attend == "optional" %}
+                        <form action="choose_event" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="event_id" value="{{event.id}}">
+                            <input type="submit" value="I want to attend">
+                        </form>
+                      {% endif %}
+                  </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
       </div>
     </div>
   </body>

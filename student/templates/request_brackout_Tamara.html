@@ -8,26 +8,27 @@
 </head>
 <body>
     {#  in case the current user is student ... #}
-    {% if user.role.type == 1 %}
-    <form action="/request_brackout" method="POST">
+    {% if request.session.role == 'student'%}
+    <form action="/students/request_brackout" method="POST">
         <textarea name="brackout"></textarea>
         <input type="submit" value="Request Brackout Session">
     </form>
     <h2>Brackout Session Suggestion</h2>
-    {% for i in request %}
-        <p>{{ i.desc }}</p>
-        <p>Votes: {{ i.votes }}</p>
-        <form action="vote" method="POST">
-            <input type="hidden" name="request" value="i.id">
+    {% for request in requests %}
+        <p>{{ request.desc }}</p>
+        <p>Votes: {{ request.votes }}</p>
+        <form action="/students/vote" method="POST">
+            <input type="hidden" name="request" value="request.id">
             <input type="submit" value="Vote">
         </form>
     {% endfor %}
     {% endif %}
 
     {#  in case the current user is instructor ... #}
-    {% if user.role.type == 2 %}
+    {% if request.session.role == "instructor" %}
     <h2> Create brackout session: </h2>
-    <form action="/create_brackout_session" method="POST">
+    <form action="/students/create_event" method="POST">
+        {% csrf_token %}
         Titel: <input type="text" name="title">
         Types: <input type="text" name="type">
         Date: <input type="date" name="date">
@@ -37,7 +38,7 @@
         <input type="hidden" name="event" value="brackout session">
         <input type="submit" value="Create">
     </form>
-    {% for x in brackout%}
+    {% for x in requests%}
     {% if x.votes > 10 %}
     <p> {{ x.desc }}</p>
     <p> {{ x.votes }}</p>
@@ -46,5 +47,6 @@
         <input type="submit" value="Delete">
     </form>
     {% endfor %}
+    {% endif %}
 </body>
 </html>

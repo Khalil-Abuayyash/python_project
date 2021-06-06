@@ -5,28 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    {% load render_partial %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <form action="/choose_students">
-        <select name="section">
-            {% for section in sections %}
-            <option value="{{ section.name }}"> {{ section.name }}</option>
-            {% endfor %}
-        </select>
-        <select name="stack">
-            {% for stack in stacks %}
-            <option value="{{ stack.name }}"> {{ stack.name }}</option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="Show Students">
-    </form>
-    <table>
-        <th> Student Name </th>
-    {% for student in selected_students %}
-    <tr>
-        <td><a href="/{{student.id}}/assignments"> {{student.first_name}} {{student.last_name}}</a></td>
-    </tr>
-    {% endfor %}
-    </table>
+    <div class="container-fluid">
+        {% render_partial 'header' %}
+        <form action="/students/choose_students" method="POST">
+            {% csrf_token %}
+            <select name="section_id">
+                {% for section in sections %}
+                <option value="{{ section.id }}"> {{ section.name }}</option>
+                {% endfor %}
+            </select>
+            <select name="stack_id">
+                {% for stack in stacks %}
+                <option value="{{ stack.id }}"> {{ stack.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Show Students">
+        </form>
+        <div class="row">
+            {% render_partial 'sidebar' %}
+            <table>
+                <th> Student Name </th>
+                {% for student in selected_students %}
+                    <tr>
+                        <td><a href="/students/{{student.id}}/assignments"> {{student.first_name}} {{student.last_name}}</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    
+    
 </body>
 </html>

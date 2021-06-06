@@ -25,38 +25,38 @@
                 <table  class="table table-sm">
                     <form action="/students/{{user.id}}/update" method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name='password' value="no">
+                        <input type="hidden" name='pass' value="no">
                         <tr>
                             <td>First Name:</td>
-                            <td><input type="text" class="form-control" value="{{user.first_name}}"></td>
+                            <td><input type="text"name='first_name' class="form-control" value="{{user.first_name}}"></td>
                             <td>Last Name:</td>
-                            <td><input type="text"  class="form-control" value="{{user.last_name}}"></td>
+                            <td><input type="text" name='last_name' class="form-control" value="{{user.last_name}}"></td>
                             
                         </tr>
                         <tr>
                             <td>Email:</td>
-                            <td><input type="email"  class="form-control" value="{{user.email}}"></td>
+                            <td><input type="email" name='email' class="form-control" value="{{user.email}}"></td>
                             <td>Confirm Email:</td>
-                            <td><input type="email" name="" id=""  class="form-control" value="{{user.email}}"></td>
+                            <td><input type="email" name="confirm_email" id="" name='' class="form-control" value="{{user.email}}"></td>
                             <td><button type="submit" class="btn btn-primary">Update Profile</button></td>
                             
                         </tr>
                         <tr>
                             <td>Mobile-Number:</td>
-                            <td><input type="text"  class="form-control" value="{{user.phone_number}}"></td>
+                            <td><input type="text" name='phone_number' class="form-control" value="{{user.phone_number}}"></td>
                             <td>Bagde Id</td>
-                            <td><input type="text"  class="form-control" value="{{user.badge_id}}"></td>
+                            <td><input type="text" name='badge_id' class="form-control" value="{{user.badge_id}}"></td>
                             
                         </tr>
                     </form>
-                    <form action="" method="POST">
+                    <form action="/students/{{user.id}}/update" method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name='password' value="yes">
+                        <input type="hidden" name='pass' value="yes">
                         <tr>
                             <td>Password:</td>
-                            <td><input type="password"  class="form-control"></td>
+                            <td><input type="password" name='password' class="form-control"></td>
                             <td>Confirm Password:</td>
-                            <td><input type="password"  class="form-control"></td>
+                            <td><input type="password" name='confirm_password' class="form-control"></td>
                             <td><button type="submit" class="btn btn-danger">Change password</button></td>
                             
                         </tr>

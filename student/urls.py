@@ -15,7 +15,7 @@ urlpatterns = [
     path('<int:student_id>/assignments',views.assignment),
     path('<int:student_id>/selected_assignment',views.selected_assignment),
     path('<int:student_id>/assignment_review',views.assignment_review),
-    path('students_progress',views.students_progress),
+    path('',views.students_progress),
     path('choose_students',views.choose_students),
 
 

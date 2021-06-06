@@ -89,13 +89,17 @@ class Event(models.Model):
     updated_at = models.DateTimeField(auto_now=True, )
 
 
-def update_user(data,id,pw_hash):
+def update_user(data,id,**kwargs):
     user = User.objects.get(id=id)
-    user.first_name = data["first_name"]
-    user.last_name = data["last_name"]
-    user.email = data["email"]
-    user.password = pw_hash
-    user.phone_number = data["phone_number"]
+
+    if 'password' not in kwargs:
+        user.first_name = data["first_name"]
+        user.last_name = data["last_name"]
+        user.email = data["email"]
+        user.phone_number = data["phone_number"]
+    else:
+        user.password = kwargs['password']
+
     user.save()
     
 
@@ -116,7 +120,10 @@ def create_request(data,id):
 
 def create_Event(data,id):
     instructor = User.objects.get(id=id)
-    today = Day.objects.get(date=datetime.today())
+    try :
+        today = Day.objects.get(date=datetime.today())
+    except:
+        today = Day.objects.last()
     Event.objects.create(title=data["title"],date=data["date"],start_time=data["start_time"],end_time=data["end_time"],type=data["type"],instructor=instructor,day=today,attend=data["attend"])
 
 def delete_request(id):
@@ -155,7 +162,9 @@ def create_userAssignment(data,user_id):
                                     comment=data["comment"], is_solved=False
                                     )
 
-def student_list(stack,section):
+def student_list(stack_id,section_id):
+    section = Section.objects.get(id=section_id)
+    stack = Stack.objects.get(id=stack_id)
     selceted_class = Class.objects.get(stack=stack,section=section)
     return selceted_class.users.all()
 

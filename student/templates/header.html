@@ -9,7 +9,12 @@
       </div>
       <ul class="nav navbar-nav nav-pills">
         <li><a href="/students/todo">To Do</a></li>
-        <li><a href="/students/{{request.session.id}}/assignments">Assignment</a></li>
+        {% if request.session.role == 'student' %}
+          <li><a href="/students/{{request.session.id}}/assignments">Assignments</a></li>
+        {% else %}
+            <li><a href="/students">Students</a></li>
+        {% endif %}
+
         <li><a href="/students/requests">Request</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

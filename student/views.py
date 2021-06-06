@@ -36,8 +36,8 @@ def to_do(request):
     context = {
         'user': User.objects.get(id=request.session['id']),
         "today": today,
-        # "Event": Event.objects.filter(date=datetime.today()), #today.events.all(),
-        "user_events": user_event(request.session["id"],today),
+        "events": Event.objects.filter(date=today.date),
+        # "user_events": user_event(request.session["id"],today),
     }
     return render(request,"home.html",context)
 
@@ -50,12 +50,14 @@ def show_update_user(request, student_id):
 def update_user_info(request, student_id):
     
     if request.method == 'POST':
-        if request.POST['password'] == 'no':
+        if request.POST['pass'] == 'no':
             update_user(request.POST, student_id)
         else:
             if request.POST["password"] == request.POST["confirm_password"]:
                 password = request.POST['password']
                 pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+                update_user(request.POST, student_id, password=pw_hash)
+        return redirect(f'/students/{student_id}/edit_profile')
 
 
 
@@ -68,13 +70,12 @@ def choose_event(request):
 # Home page - request page
 
 def brackout_session(request):
-    all_event = Event.objects.all()
     context = {
-        "user": User.objects.get(id=request.seesion["id"]),
-        "request":Request.objects.all(),
-        "brackout": Request.objects.all(),
-        "all_event": Event.objects.all()
-            }
+        "user": User.objects.get(id=request.session["id"]),
+        "requests":Request.objects.all(),
+        # "brackout": Request.objects.all(),
+        # "all_event": Event.objects.all()
+        }
     return render(request,"request_brackout_Tamara.html",context)# /request
 
 # the below 2 function is for the students to request an event and vote for one
@@ -101,7 +102,7 @@ def delete_user_request(request,id):
 # Home page - assignment page
 #the below 3 function is for the user to display their assigments and rate them
 def assignment(request,student_id):
-    request.session["url_id"] = student_id
+    request.session["student_id"] = student_id
     try :
         day = Day.objects.get(date=datetime.today())
     except:
@@ -111,7 +112,9 @@ def assignment(request,student_id):
 
     if 'selected_stack' in request.session:
         stack = request.session['selected_stack']
-    stack = day.stack
+    else :
+        stack = day.stack
+        
     user = User.objects.get(id=student_id)
     c = Class.objects.get(users=user,stack=stack)
     section = c.section # it will be one section can i reach it without all()
@@ -155,18 +158,23 @@ def assignment_review(request, student_id):
 
 #the below 3 function is for the instructer to display students assignments
 def students_progress(request):
+    if 'stack_id' in request.session and 'section_id' in request.session:
+        selected_students = student_list(request.session["stack_id"],request.session["section_id"])
+    else:
+        selected_students = [0,0,0,0,0,0,0,0,0,0]
+
     context = {
         "stacks":Stack.objects.all(),
         "sections":Section.objects.all(),
-        "selected_students": student_list(request.session["stack"],request.POST["section"])#check it it will not work
+        "selected_students": selected_students,
         }
     return render(request,"students_progress.html",context)
 
 def choose_students(request):
-    request.session["stack_students"] = request.POST["stack"]
-    request.session["section_students"] = request.POST["section"]
+    request.session["stack_id"] = request.POST["stack_id"]
+    request.session["section_id"] = request.POST["section_id"]
     # student_list(request.POST["stack"],request.POST["section"])
-    return redirect ("students_progress")
+    return redirect ("/students")
 
 
 
