@@ -75,28 +75,34 @@ def brackout_session(request):
         "requests":Request.objects.all(),
         # "brackout": Request.objects.all(),
         # "all_event": Event.objects.all()
+        'range': [1,2,3,4,5]
         }
-    return render(request,"request_brackout_Tamara.html",context)# /request
+    return render(request,"requests.html",context)# /request
 
 # the below 2 function is for the students to request an event and vote for one
 def request_brackout(request):
     create_request(request.POST,request.session["id"])
-    return redirect("requests")
+    return redirect("/students/requests")
 
 def vote(request):
-    selected_request = Request.objects.get(id=int(request.post["request"]))
-    selected_request.votes += 1
-    selected_request.save()
-    return redirect("requests")
+    selected_request = Request.objects.get(id=int(request.POST["request"]))
+    if "action" in request.POST:
+        if request.session['vote'] == "yes":
+            selected_request.votes += 1
+            selected_request.save()
+        elif request.session['vote'] == "No":
+            selected_request.votes -= 1
+            selected_request.save()
+    return redirect("/students/requests")
 
 # the below 2 function is for the intructor to create an event and delete a request 
 def create_brackout(request):
     create_Event(request.POST,request.session["id"])
-    return redirect("/request")
+    return redirect("/students/requests")
 
 def delete_user_request(request,id):
     delete_request(id)
-    return redirect("/request")
+    return redirect("/students/requests")
 
 #************************************************************************************************
 # Home page - assignment page

@@ -10,6 +10,7 @@
     {#  in case the current user is student ... #}
     {% if request.session.role == 'student'%}
     <form action="/students/request_brackout" method="POST">
+        {% csrf_token %}
         <textarea name="brackout"></textarea>
         <input type="submit" value="Request Brackout Session">
     </form>
@@ -17,10 +18,19 @@
     {% for request in requests %}
         <p>{{ request.desc }}</p>
         <p>Votes: {{ request.votes }}</p>
+        {% if request.session.vote == "yes" %}
         <form action="/students/vote" method="POST">
-            <input type="hidden" name="request" value="request.id">
-            <input type="submit" value="Vote">
+            {% csrf_token %}
+            <input type="hidden" name="request" value="{{request.id}}">
+            <input type="submit" name="action" value="Vote">
         </form>
+        {% elif request.session.vote == "No" %}
+        <form action="/students/vote" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="request" value="{{request.id}}">
+            <input type="submit" name="action" value="Vote">
+        </form>
+        {% endif %}
     {% endfor %}
     {% endif %}
 

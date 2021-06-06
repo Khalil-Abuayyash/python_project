@@ -22,16 +22,19 @@
     <div class="container">
       <div style="border-right: 1px solid black;" class="col-sm-7">
         <h1>Breakout Session: </h1>
-        <h3 style="background-color: #f2f3fe;; border: 2px solid black ; border-radius: 8px; padding: 1%; box-shadow: 2px 2px black;">so how you doin man<br>
-        Do you feel me <br>
-        stop feeling plz
-        </h3>
-        <p>VOTES:</p>
-        <button type="submit" class="btn btn-primary">VOTE</button>
+        <!-- <h3 style="background-color: #f2f3fe;; border: 2px solid black ; border-radius: 8px; padding: 1%; box-shadow: 2px 2px black;">
+
+        </h3> -->
       </div>
-
-      <div class="col-sm-1"></div>
-
+      
+        {% for num in range %}
+        <div style="border-right: 1px solid black;" class="col-sm-7">
+          <p>{{num}}</p>
+          <p>VOTES:</p>
+          <button type="submit" class="btn btn-primary">VOTE</button>
+        </div>
+        {% endfor %}
+      
       <div class="col-sm-4">
         <form class="request-form" action="" method="POST">
           <textarea name="" id="" cols="40" rows="5"></textarea>
