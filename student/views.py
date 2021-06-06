@@ -41,22 +41,23 @@ def to_do(request):
     }
     return render(request,"home.html",context)
 
-def show_update_user(request):
-    return render(request, "update.html")
+def show_update_user(request, student_id):
+    context = {
+        'user' : User.objects.get(id=student_id)
+    }
+    return render(request, "edit_profile.html", context)
 
-def update_user_info(request):
-    id = request.session["id"]
-    if request.POST["password"] == request.POST["confirm_password"]:
-        password = request.POST['password']
-        pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-        update_user(request.POST,id,pw_hash)
-        return redirect("/students/edit")
-    else:
-        errors = {}
-        errors['password'] = "password does not match"
-        for key, value in errors.items():
-            messages.error(request, value)
-        return redirect("/students/edit")
+def update_user_info(request, student_id):
+    
+    if request.method == 'POST':
+        if request.POST['password'] == 'no':
+            update_user(request.POST, student_id)
+        else:
+            if request.POST["password"] == request.POST["confirm_password"]:
+                password = request.POST['password']
+                pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+
+
 
 def choose_event(request):
     event_id = request.POST["event_id"]

@@ -4,8 +4,8 @@ from . import views
 
 urlpatterns = [
     path('todo',views.to_do),
-    path('edit',views.show_update_user),
-    path('update',views.update_user_info),
+    path('<int:student_id>/edit_profile',views.show_update_user),
+    path('<int:student_id>/update',views.update_user_info),
     path('choose_event',views.choose_event),
     path('requests',views.brackout_session),
     path('request_brackout',views.request_brackout),
