@@ -7,6 +7,13 @@
     background-image: url('1.jpg');
 }
 
+.nav-tabs, .tab-content{
+    margin-left: 45%
+}
+.tab-content{
+    width: 100%;
+}
+
 .nav-tabs ,.nav-tabs > li{
     width: 50%;
     font-size: larger;
