@@ -3,6 +3,14 @@
     padding: 0px;
 }
 
+/* .navdata{
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.55%;
+} */
+
 li , a{
   font-family: cursive;
   /* text-decoration: springgreen; */
@@ -11,6 +19,7 @@ li , a{
 h1 {
   font-family: Georgia, "Times New Roman", Times, serif;
 }
+
 
 .row > * {
     width: 32%;

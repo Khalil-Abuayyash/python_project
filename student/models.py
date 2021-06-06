@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 from login.models import *
-from datetime import datetime
+from datetime import date, datetime
 
 class Request(models.Model):
     desc = models.CharField(max_length=255)
@@ -116,15 +116,16 @@ def user_event(id,day):
 def create_request(data,id):
     # we should have a type of valudation for the user in case he add an already existed suggition
     user = User.objects.get(id=id)
-    Request.objects.create(desc=data["brackout"],user=user, votes=0)
+    Request.objects.create(desc=data["breakout"],user=user, votes=0)
 
 def create_Event(data,id):
     instructor = User.objects.get(id=id)
     try :
-        today = Day.objects.get(date=datetime.today())
+        today = Day.objects.get(date=data[date])
     except:
         today = Day.objects.last()
-    Event.objects.create(title=data["title"],date=data["date"],start_time=data["start_time"],end_time=data["end_time"],type=data["type"],instructor=instructor,day=today,attend=data["attend"])
+    type = EventCategory.objects.get(category=data["type"])
+    Event.objects.create(title=data["title"],date=data["date"],start_time=data["start_time"],end_time=data["end_time"],type=type,instructor=instructor,day=today,attend=data["attend"])
 
 def delete_request(id):
     selected_request = Request.objects.get(id=id)

@@ -11,36 +11,80 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    {% load render_partial %} {% load static %}
+    {% load render_partial %} 
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/requests.css' %}" />
     <style>
-
+      body, .col-sm-5, .col-sm-2, .col-sm-4 {
+          background-image: url("{% static 'img/1.jpg' %}");
+      }
     </style>
   </head>
   <body>
     {% render_partial 'header' %}
-    <div class="container">
-      <div style="border-right: 1px solid black;" class="col-sm-7">
-        <h1>Breakout Session: </h1>
-        <!-- <h3 style="background-color: #f2f3fe;; border: 2px solid black ; border-radius: 8px; padding: 1%; box-shadow: 2px 2px black;">
-
-        </h3> -->
-      </div>
-      
-        {% for num in range %}
-        <div style="border-right: 1px solid black;" class="col-sm-7">
-          <p>{{num}}</p>
-          <p>VOTES:</p>
-          <button type="submit" class="btn btn-primary">VOTE</button>
-        </div>
+    <div class="container-fluid">
+      {% render_partial 'sidebar' %}
+      <div class="col-sm-5">
+        <h2>Breakout Session</h2>
+        {% for req in requests %}
+          <div>
+            <p>{{req.desc}}</p>
+            <div class="vote">
+              <h4>Votes: {{req.votes}}</h4>
+              <a href="/students/{{req.id}}/vote"><button type="submit" class="btn btn-success btn-lg">Vote</button></a>
+            </div>
+              
+          </div>
         {% endfor %}
-      
+      </div>
       <div class="col-sm-4">
-        <form class="request-form" action="" method="POST">
-          <textarea name="" id="" cols="40" rows="5"></textarea>
-        </form>
-        <button type="submit" class="btn btn-primary">Request</button>
+        {% if request.session.role == 'student' %}
+          <h1>Ask for a Break-out Session:</h1>
+          <form method="POST" action="/students/request_breakout">
+            {% csrf_token %}
+            <textarea class="form-control" cols="40" rows="3" name="breakout"></textarea>
+            <button class="btn btn-success btn-sm" type="submit">Creat Breakout Session Request</button>
+          </form>
+        {% else %}
+
+          <h1>Create Event:</h1>
+          <form class="event" action="/students/create_event" method="POST">
+            {% csrf_token %}
+            <p>
+              <label for="title">Title:</label>
+              <input type="text" id="title" name="title" />
+            </p>
+
+            <p>
+              <label for="types">Types:</label>
+              <select name="type" id="types">
+                <option value="tech_talk">Tech talk</option>
+                <option value="breakout">Breakout</option>
+                <option value="activity">Activity</option>
+              </select>
+            </p>
+            <p>
+              <label for="attendance">Attend:</label>
+              <select name="attend" id="attendance">
+                <option value="mandatory">Mandatory</option>
+                <option value="optional">Optional</option>
+              </select>
+            </p>
+            <p>
+              <label for="date">Date:</label>
+              <input type="date" name="date" />
+            </p>
+            <label for="start_time">Start time:</label>
+            <input type="time" name="start_time">
+            <label for="end_time">End time:</label>
+            <input type="time" name="end_time">
+            <p>
+              <button type="submit" class="btn btn-success">Create</button>
+            </p>
+          </form>
+        {% endif %}
       </div>
     </div>
+    {% render_partial 'footer' %}
   </body>
 </html>

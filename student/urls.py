@@ -8,9 +8,9 @@ urlpatterns = [
     path('<int:student_id>/update',views.update_user_info),
     path('choose_event',views.choose_event),
     path('requests',views.brackout_session),
-    path('request_brackout',views.request_brackout),
-    path('vote',views.vote),
-    path('create_event',views.create_brackout),
+    path('request_breakout',views.request_breakout),
+    path('<int:request_id>/vote',views.vote),
+    path('create_event',views.create_breakout),
     path('delete_request/<int:id>',views.delete_user_request),
     path('<int:student_id>/assignments',views.assignment),
     path('<int:student_id>/selected_assignment',views.selected_assignment),
@@ -24,4 +24,5 @@ urlpatterns = [
     # path('<int:id>/edit', views.edit),
     url('header', views.header, name='header'),
     url('sidebar', views.sidebar, name='sidebar'),
+    url('footer', views.footer, name='footer'),
 ]

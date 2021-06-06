@@ -44,8 +44,8 @@
                             </select>
                         </p>
                     {% else %}
-                        <p class="para"> Section: {{ request.session.section }}</p>
-                        <p class="para"> Stack: {{ request.session.stack }}</p>
+                        <p class="para"> Section: {{ section.name }}</p>
+                        <p class="para"> Stack: {{ stack.name }}</p>
                     {% endif %}
                     <p>
                         <button type="submit" class="btn btn-success btn-lg">Submit</button>
@@ -128,26 +128,7 @@
             {% endfor %}
         </div>
     </div>
-
-    <footer class="bg-light text-center text-lg-start">
-        <div class="container p-4">
-            <div class="row">
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Footer text</h5>
-                </div>
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Footer text</h5>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2021 Copyright:
-            <a class="text-dark" href="https://academy.axsos.ps/">Academy.axsos.ps</a>
-        </div>
-
-    </footer>
-
+    {% render_partial 'footer' %}
 </body>
 
 </html>

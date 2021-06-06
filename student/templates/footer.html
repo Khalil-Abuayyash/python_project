@@ -1,7 +1,21 @@
-<nav class="navbar navbar-default">
-    <ul class="nav nav-tabs nav-justified" role="tablist">
-        <li><a href="">To Do</a></li>
-        <li><a href="">Assignment</a></li>
-        <li><a href="">Request</a></li>
-    </ul>
-</nav>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+
+<footer class="bg-light text-center text-lg-start">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Footer text</h5>
+            </div>
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Footer text</h5>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2021 Copyright:
+        <a class="text-dark" href="https://academy.axsos.ps/">Academy.axsos.ps</a>
+    </div>
+
+</footer>

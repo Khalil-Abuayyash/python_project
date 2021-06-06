@@ -12,6 +12,9 @@ from datetime import datetime
 def header(request):
     return render(request, 'header.html')
 
+def footer(request):
+    return render(request, 'footer.html')
+
 def sidebar(request):
     context = {
         'user': User.objects.get(id=request.session['id']),
@@ -37,6 +40,7 @@ def to_do(request):
         'user': User.objects.get(id=request.session['id']),
         "today": today,
         "events": Event.objects.filter(date=today.date),
+        # 'events': Event.objects.all()
         # "user_events": user_event(request.session["id"],today),
     }
     return render(request,"home.html",context)
@@ -75,28 +79,23 @@ def brackout_session(request):
         "requests":Request.objects.all(),
         # "brackout": Request.objects.all(),
         # "all_event": Event.objects.all()
-        'range': [1,2,3,4,5]
+        # 'range': [1,2,3,4,5]
         }
     return render(request,"requests.html",context)# /request
 
 # the below 2 function is for the students to request an event and vote for one
-def request_brackout(request):
+def request_breakout(request):
     create_request(request.POST,request.session["id"])
     return redirect("/students/requests")
 
-def vote(request):
-    selected_request = Request.objects.get(id=int(request.POST["request"]))
-    if "action" in request.POST:
-        if request.session['vote'] == "yes":
-            selected_request.votes += 1
-            selected_request.save()
-        elif request.session['vote'] == "No":
-            selected_request.votes -= 1
-            selected_request.save()
+def vote(request, request_id):
+    selected_request = Request.objects.get(id=request_id)
+    selected_request.votes += 1
+    selected_request.save() 
     return redirect("/students/requests")
 
 # the below 2 function is for the intructor to create an event and delete a request 
-def create_brackout(request):
+def create_breakout(request):
     create_Event(request.POST,request.session["id"])
     return redirect("/students/requests")
 
@@ -139,6 +138,11 @@ def assignment(request,student_id):
         'stack': stack,
         "stacks": Stack.objects.all(),
         'assignment_dict': assignment_dict,
+        # 'assignment_dict': {
+        #     1:'werw',
+        #     2:'sdfsdf',
+        #     3:'asdasd,'
+        # },
         # "assignments": selected_satck.assignments.all(),
         # "selected_assignment":selected_assignment,
         "range":range(1,11),

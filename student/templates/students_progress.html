@@ -13,38 +13,52 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     {% load render_partial %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/student_progress.css' %}">
+    <style>
+        body, .col-sm-5, .col-sm-2, .col-sm-4, .col-sm-8 {
+            background-image: url("{% static 'img/1.jpg' %}");
+        }
+ 
+    </style>
 </head>
 <body>
     <div class="container-fluid">
         {% render_partial 'header' %}
-        <form action="/students/choose_students" method="POST">
-            {% csrf_token %}
-            <select name="section_id">
-                {% for section in sections %}
-                <option value="{{ section.id }}"> {{ section.name }}</option>
-                {% endfor %}
-            </select>
-            <select name="stack_id">
-                {% for stack in stacks %}
-                <option value="{{ stack.id }}"> {{ stack.name }}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Show Students">
-        </form>
+        <nav class="navbar navbar-inverse">
+            <form class="navdata" action="/students/choose_students" method="POST">
+                {% csrf_token %}
+                <p class="day">
+                    <select name="section_id" class="form-control">
+                        {% for section in sections %}
+                        <option value="{{ section.id }}"> {{ section.name }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <p class="day">
+                    <select name="stack_id" class="form-control" >
+                        {% for stack in stacks %}
+                        <option value="{{ stack.id }}"> {{ stack.name }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <input class="btn btn-success btn-sm" type="submit" value="Show Students">
+            </form>
+        </nav>
         <div class="row">
             {% render_partial 'sidebar' %}
-            <table>
-                <th> Student Name </th>
-                {% for student in selected_students %}
-                    <tr>
-                        <td><a href="/students/{{student.id}}/assignments"> {{student.first_name}} {{student.last_name}}</a></td>
-                    </tr>
-                {% endfor %}
-            </table>
+            <div class="col-sm-8">
+                <table >
+                    <th> <h2>Student Names: </h2></th>
+                    {% for student in selected_students %}
+                        <tr>
+                            <td><a href="/students/{{student.id}}/assignments"> {{student.first_name}} {{student.last_name}}</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            
         </div>
     </div>
-    
-    
+    {% render_partial 'footer' %}
 </body>
 </html>

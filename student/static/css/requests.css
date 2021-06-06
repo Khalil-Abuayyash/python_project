@@ -1,11 +1,40 @@
-
-.col-sm-7{
-display: flex;
-align-items: flex-start ;
-border: 1px outset black;
+.col-sm-4{
+    border-left: 2px solid black;
 }
 
-.col-sm-1{
-    border-right: 2px solid black;
-    height:500px
+.col-sm-5 > div, .col-sm-5 > div > p{
+    border: 2px outset black;
+    padding: 2%;
+    border-radius: 8px;
+    box-shadow: 1px 1px black;
+}
+
+.col-sm-5 > div{
+    margin-bottom: 4%;
+}
+
+
+.col-sm-5 > div > h4{
+    display: inline-block;
+    
+
+}
+.vote{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+form{
+    padding: 2%;
+}
+textarea{
+    border-radius: 8px;
+    margin-bottom: 2%;
+}
+
+@media screen and (max-width: 480px) {
+  .vote {
+    flex-direction: column;
+  }
 }
