@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="assign_1.css" />
     <title>Assignment</title>
     {% load render_partial %}
     {% load static %}
@@ -25,22 +24,25 @@
         {% render_partial 'header' %}
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
-                <form action="/students/{{student_id}}/selected_assignment" method="POST" >
+                <form class="navdata" action="/students/{{student_id}}/selected_assignment" method="POST" >
                     {% csrf_token %}
-                    <label for="day">Day</label>
-                    <select class="form-control" name="day" id="day" class="nav navbar-nav nav-pills">
-                        {% for day in stack_days %}
-                            <option value="{{ day.name }}"> {{ day.name }}</option>
-                        {% endfor %}
-                    </select>
-                    {% if current_user.role.id == 1 %}
-                        <p class="paro">Section : {{section.name}}</p>
-                        <label for="stack">Stack</label>
-                        <select class="form-control" name="stack" id="stack">
-                            {% for stack in stacks %}
-                                <option value="{{ stack.name }}"> {{ stack.name }}</option>
+                    <p class="day">
+                        <select class="form-control" name="day" id="day" class="nav navbar-nav nav-pills">
+                            {% for day in stack_days %}
+                                <option value="{{ day.name }}"> {{ day.name }}</option>
                             {% endfor %}
                         </select>
+                    </p>
+                    {% if current_user.role.id == 1 %}
+                        <p class="paro">Section : {{section.name}}</p>
+                        <p class="p">
+                            <label for="stack">Stack</label>
+                            <select class="form-control" name="stack" id="stack">
+                                {% for stack in stacks %}
+                                    <option value="{{ stack.name }}"> {{ stack.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
                     {% else %}
                         <p class="para"> Section: {{ request.session.section }}</p>
                         <p class="para"> Stack: {{ request.session.stack }}</p>
@@ -60,7 +62,7 @@
                         <form action="/students/{{student_id}}/assignment_review" method="POST">
                             {% csrf_token %}
                             <label for="hardness">Hardness: </label>
-                            <select class="form-control" id="hardness" name="hardness" aria-label="Default select example">
+                            <select class="form-control" id="hardness" name="hardness"  aria-label="Default select example">
                                 <option value="2">Easy</option>
                                 <option value="5">Normal</option>
                                 <option value="8">Difficult</option>
@@ -127,7 +129,7 @@
         </div>
     </div>
 
-    <!-- <footer class="bg-light text-center text-lg-start">
+    <footer class="bg-light text-center text-lg-start">
         <div class="container p-4">
             <div class="row">
                 <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
@@ -144,7 +146,7 @@
             <a class="text-dark" href="https://academy.axsos.ps/">Academy.axsos.ps</a>
         </div>
 
-    </footer> -->
+    </footer>
 
 </body>
 
