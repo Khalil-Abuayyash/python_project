@@ -1,3 +1,10 @@
+.col-sm-2{
+  background-color: tomato;
+  padding: 1%;
+  margin-bottom: 1%;
+  margin-left: 1%;
+  color: #123546;
+}
 .profile{
     padding-top: 30%;
     padding-bottom: 20%;
@@ -5,7 +12,8 @@
     border: 1px outset black;
     border-radius: 8px;
     box-shadow: 2px 2px black;
-    background-color: #f2f3fe;
+    background-color: #8cc9e2;
+    
   }
   .activity{
     border-top: 2px solid black;
@@ -15,13 +23,18 @@
     border: 1px outset black;
     border-radius: 8px;
     box-shadow: 2px 2px black;
-    margin-top: 2%;
+    margin-top: 10%;
+    background-color: #8cc9e2 ;
+    
   }
   .col-sm-2, .col-sm-4{
     border-right: 1px outset black ;
     border-radius: 8px;
     box-shadow: 2px 2px black;
     margin-right:1%;
+  }
+  .col-sm-4{
+    margin-left: 2%;
   }
   .col-sm-5{
     border-left: 1px outset black ;

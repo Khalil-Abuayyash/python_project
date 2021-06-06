@@ -1,10 +1,19 @@
+
 .col-sm-3{
     border-right: 1px solid black;
     height: 700px;
+    color: #123546;
 }
 .col-sm-4{
     border-left: 1px solid black;
     max-height: 610px;
+    margin-left: 1%;
+    background-color: rgb(241, 144, 127);
+    color: #123546;
+}
+.col-sm-5{
+    background-color: tomato;
+    color: #123546;
 }
 .form-control{
     width: 20%;
@@ -13,4 +22,51 @@ footer{
     background-color: #b2dced;
     border: 2px solid #b2dced;
     border-radius: 8px;
+}
+
+.navdata{
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.55%;
+    
+    
+}
+
+.navdata > .p{
+    display: inline-flex;
+    justify-content: space-between;
+    margin-right: 2%;
+}
+
+.p > select{
+    width:100%;
+    
+}
+
+.p > label{
+    padding-top: 3%;
+    margin-right: 10%;
+} 
+
+
+.paro{
+    font-size: large;
+}
+
+footer{
+    background-color: #222222;
+    border: 2px solid ##222222;
+    border-radius: 8px;
+    color:white;
+}
+.day > select{
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .navdata {
+    flex-direction:column;
+    }
 }
