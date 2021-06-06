@@ -12,8 +12,11 @@ from datetime import datetime
 def header(request):
     return render(request, 'header.html')
 
-# def sidebar(request):
-#     return render(request, 'sidebar.html')
+def sidebar(request):
+    context = {
+        'user': User.objects.get(id=request.session['id']),
+    }
+    return render(request, 'sidebar.html', context)
 
 # def edit(request, id):
 #     return render(request, 'edit_profile.html')
@@ -56,9 +59,9 @@ def update_user_info(request):
         return redirect("/students/edit")
 
 def choose_event(request):
-    event_id = int(request.POST["event_id"])
+    event_id = request.POST["event_id"]
     choose_events(request.session["id"],event_id)
-    return redirect("todo")
+    return redirect("/students/todo")
 
 #************************************************************************************************
 # Home page - request page
@@ -96,17 +99,22 @@ def delete_user_request(request,id):
 #************************************************************************************************
 # Home page - assignment page
 #the below 3 function is for the user to display their assigments and rate them
-def assignment(request,id):
-    request.session["url_id"] = id
-    day = Day.objects.get(date=datetime.today())
+def assignment(request,student_id):
+    request.session["url_id"] = student_id
+    try :
+        day = Day.objects.get(date=datetime.today())
+    except:
+        day = Day.objects.last()
     if 'day' in request.POST:
         day = Day.objects.get(name=request.POST['day'], stack=day.stack)
 
+    if 'selected_stack' in request.session:
+        stack = request.session['selected_stack']
     stack = day.stack
-    user = User.objects.get(id=id)
-    c = Class.objects.get(user=user,stack=stack)
+    user = User.objects.get(id=student_id)
+    c = Class.objects.get(users=user,stack=stack)
     section = c.section # it will be one section can i reach it without all()
-    selected_satck = Stack.objects.get(name=request.session["selected_stack"])
+    # selected_satck = Stack.objects.get(name=request.session["selected_stack"])
     # selected_assignment = Assignment.objects.get(name=request.POST["assignment"])
     assignments =  day.assignments.all()
     assignment_dict={}
@@ -115,8 +123,10 @@ def assignment(request,id):
 
     context = {
         'selected_day': day,
-        "stack_days": Stack.days.all(),
+        # 'selected_stack': stack,
+        "stack_days": stack.days.all(),
         "section": section,
+        'stack': stack,
         "stacks": Stack.objects.all(),
         'assignment_dict': assignment_dict,
         # "assignments": selected_satck.assignments.all(),
@@ -124,16 +134,23 @@ def assignment(request,id):
         "range":range(1,11),
         "current_user": User.objects.get(id=request.session["id"]),
         "selected_student": user,
+        'student_id': student_id,
     }
-    return render(request,"assigment_Tamara.html",context)
+    return render(request,"assignment.html",context)
 
-def selected_assignment(request):# we might use ajax for this
-    request.session["selected_stack"] = request.POST["stack"]
-    return redirect(str(request.session["id"])+"/assignments")
+def selected_assignment(request, student_id):# we might use ajax for this
+    if 'selected_stack' in request.session:
+        request.session["selected_stack"] = request.POST["stack"]
+    # if request.session['role'] == 'instructor':
+    #     return redirect(str(request.session["id"])+"/assignments")
+    # if request.session['role'] == 'student':
+    #     return redirect(str(request.session["id"])+"/assignments")
+    return redirect(f"/students/{student_id}/assignments")
 
-def assignment_review(request):
-    create_userAssignment(request.POST,request.session["id"])
-    return redirect(str(request.session["url_id"])+"/assignments")
+
+def assignment_review(request, student_id):
+    create_userAssignment(request.POST, student_id)
+    return redirect(f"/students/{student_id}/assignments")
 
 #the below 3 function is for the instructer to display students assignments
 def students_progress(request):

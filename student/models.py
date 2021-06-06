@@ -62,6 +62,7 @@ class UserAssignment(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=CASCADE)
     user = models.ForeignKey(User, on_delete=CASCADE)
     hardness = models.IntegerField()
+    is_solved = models.BooleanField(default=False)
     code_review = models.TextField(default='') # it will not filled by the user it will be blank when i get the user rating or coomplain from the assignment
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, )
@@ -123,24 +124,36 @@ def delete_request(id):
     selected_request.delete()
 
 def create_userAssignment(data,user_id):
-    user = User.objects.get(id=id)
-    codeReview = UserAssignment.objects.get(assignment=data["assignment.id"])
-    assignment = Assignment.objects.get(id=data['assigment_id'])
+    user = User.objects.get(id=user_id)
+    assignment = Assignment.objects.get(id=data['assignment_id'])
     if "code_review" in data:
-        user_assignment = UserAssignment.objects.get(assignment=codeReview, user=user)
+        user_assignment = UserAssignment.objects.get(assignment=assignment, user=user)
         user_assignment.code_review = data["code_review"]
         user_assignment.save()
+    else:
 
-    try :
-        user_assignment = UserAssignment.objects.get(assignment=assignment, user=user)
-        user_assignment.hardness = data["hardness"]
-        user_assignment.comment = data["comment"]
-        user_assignment.save()
-    except:
-        UserAssignment.objects.create(
-                            assignment=assignment,user=user,hardness=data["hardness"],
-                            comment=data["comment"]
-                            )
+        try :
+            user_assignment = UserAssignment.objects.get(assignment=assignment, user=user)
+            user_assignment.hardness = data["hardness"]
+            user_assignment.comment = data["comment"]
+            if "is_solved" in data:
+                user_assignment.is_solved = True
+            else:
+                user_assignment.is_solved = False
+            user_assignment.save()
+        except:
+            if "is_solved" in data:
+                
+                UserAssignment.objects.create(
+                                assignment=assignment,user=user,hardness=data["hardness"],
+                                comment=data["comment"], is_solved=True
+                                )
+            else:
+                
+                UserAssignment.objects.create(
+                                    assignment=assignment,user=user,hardness=data["hardness"],
+                                    comment=data["comment"], is_solved=False
+                                    )
 
 def student_list(stack,section):
     selceted_class = Class.objects.get(stack=stack,section=section)

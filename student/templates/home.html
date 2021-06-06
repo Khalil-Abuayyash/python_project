@@ -13,175 +13,13 @@
     <title>HomePage</title>
     {% load render_partial %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <style>
-      .profile{
-        padding-top: 30%;
-        padding-bottom: 20%;
-        padding-left:12%;
-        border: 1px outset black;
-        border-radius: 8px;
-        box-shadow: 2px 2px black;
-        background-color: #f2f3fe;
-      }
-      .activity{
-        border-top: 2px solid black;
-        padding-top: 30%;
-        padding-bottom: 20%;
-        padding-left:12%;
-        border: 1px outset black;
-        border-radius: 8px;
-        box-shadow: 2px 2px black;
-        margin-top: 2%;
-      }
-      .col-sm-2, .col-sm-4{
-        border-right: 1px outset black ;
-        border-radius: 8px;
-        box-shadow: 2px 2px black;
-        margin-right:1%;
-      }
-      .col-sm-5{
-        border-left: 1px outset black ;
-        border-radius: 8px;
-        box-shadow: 2px 2px black;
-        margin-left:1%;
-
-      }
-
-
-      .timeline {
-        border-left: 3px solid #727cf5;
-        border-bottom-right-radius: 4px;
-        border-top-right-radius: 4px;
-        background: rgba(114, 124, 245, 0.09);
-        margin: 0 auto;
-        letter-spacing: 0.2px;
-        position: relative;
-        line-height: 1.4em;
-        font-size: 1.03em;
-        padding: 50px;
-        list-style: none;
-        text-align: left;
-        max-width: 40%;
-      }
-
-      @media (max-width: 767px) {
-        .timeline {
-          max-width: 98%;
-          padding: 25px;
-        }
-      }
-
-      .timeline h1 {
-        font-weight: 300;
-        font-size: 1.4em;
-      }
-
-      .timeline h2,
-      .timeline h3 {
-        font-weight: 600;
-        font-size: 1rem;
-        margin-bottom: 10px;
-      }
-
-      .timeline .event {
-        border-bottom: 1px dashed #e8ebf1;
-        padding-bottom: 25px;
-        margin-bottom: 25px;
-        position: relative;
-      }
-
-      @media (max-width: 767px) {
-        .timeline .event {
-          padding-top: 30px;
-        }
-      }
-
-      .timeline .event:last-of-type {
-        padding-bottom: 0;
-        margin-bottom: 0;
-        border: none;
-      }
-
-      .timeline .event:before,
-      .timeline .event:after {
-        position: absolute;
-        display: block;
-        top: 0;
-      }
-
-      .timeline .event:before {
-        left: -207px;
-        content: attr(data-date);
-        text-align: right;
-        font-weight: 100;
-        font-size: 0.9em;
-        min-width: 120px;
-      }
-
-      @media (max-width: 767px) {
-        .timeline .event:before {
-          left: 0px;
-          text-align: left;
-        }
-      }
-
-      .timeline .event:after {
-        -webkit-box-shadow: 0 0 0 3px #1d1e31;
-        box-shadow: 0 0 0 3px #aab0e2;
-        left: -55.8px;
-        background: #fff;
-        border-radius: 50%;
-        height: 9px;
-        width: 9px;
-        content: "";
-        top: 5px;
-      }
-
-      @media (max-width: 767px) {
-        .timeline .event:after {
-          left: -31.8px;
-        }
-      }
-
-      .rtl .timeline {
-        border-left: 0;
-        text-align: right;
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
-        border-bottom-left-radius: 4px;
-        border-top-left-radius: 4px;
-        border-right: 3px solid #727cf5;
-      }
-
-      .rtl .timeline .event::before {
-        left: 0;
-        right: -170px;
-      }
-
-      .rtl .timeline .event::after {
-        left: 0;
-        right: -55.8px;
-      }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
   </head>
   <body>
     <div class="container-fluid">
       {% render_partial 'header' %}
       <div class="row">
-        <div class="col-sm-2">
-          <div class="profile">
-            <h4>Name: {{user.first_name}} {{user.last_name}}</h4>
-            <h4>Badge_ID: {{user.badge_id}}</h4>
-            <h4>Mobile: {{user.phone_number}}</h4>
-          </div>
-          <div class="activity">
-            <p>Section:</p>
-            <p>Absences: {{user.absences}} Days</p>
-            <p>Lates: {{user.lates}}</p>
-            <p>Points: {{user.points}}</p>
-          </div>
-        </div>
+        {% render_partial 'sidebar' %}
         <div class="col-sm-5">
           <h2>Today Schedule:</h2>
           <div class="row">
@@ -211,7 +49,7 @@
                 {% endfor %}
                 <h5>Events:</h5>
                 {% for event in user_events %}
-                  {% if event.attend == "optional" %}
+                  {% if event.attend == "mandatory" or user.role.id == 2 %}
                     <h6>{{event.start_time}}-{{event.end_time}} {{event.type.category}}: {{event.title}}</h6>
                   {% endif %}
                 {% endfor %}
@@ -233,6 +71,7 @@
                 <th>End Time</th>
                 <th>Type</th>
                 <th>Attend</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -242,6 +81,15 @@
                   <td>{{event.end_time}}</td>
                   <td>{{event.type.category}}</td>
                   <td>{{event.attend}}</td>
+                  <td>
+                    {% if event.attend == "optional" %}
+                      <form action="choose_event" method="POST">
+                          {% csrf_token %}
+                          <input type="hidden" name="event_id" value="{{event.id}}">
+                          <input type="submit" value="I want to attend">
+                      </form>
+                    {% endif %}
+                </td>
                 </tr>
               {% endfor %}
             </tbody>

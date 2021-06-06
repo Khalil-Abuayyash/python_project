@@ -4,8 +4,13 @@
 }
 .col-sm-4{
     border-left: 1px solid black;
-    height: 700px;
+    max-height: 610px;
 }
 .form-control{
     width: 20%;
+}
+footer{
+    background-color: #b2dced;
+    border: 2px solid #b2dced;
+    border-radius: 8px;
 }

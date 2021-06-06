@@ -1,13 +1,17 @@
-<aside>
-    <h3>Name:</h3>
-    <h3>ID:</h3>
-    <h3>Mobile:</h3>
-    <a href="edit_profile.html">Update Info</a>
-    <hr>
-    <p>Attendance :</p>
-    <p>Late :</p>
-    <p>Points :</p>
-    <p>Section :</p>
-</aside>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 
+<div class="col-sm-2">
+    <div class="profile">
+      <h4>Name: {{user.first_name}} {{user.last_name}}</h4>
+      <h4>Badge_ID: {{user.badge_id}}</h4>
+      <h4>Mobile: {{user.phone_number}}</h4>
+    </div>
+    <div class="activity">
+      <p>Section:</p>
+      <p>Absences: {{user.absences}} Days</p>
+      <p>Lates: {{user.lates}}</p>
+      <p>Points: {{user.points}}</p>
+    </div>
+  </div>

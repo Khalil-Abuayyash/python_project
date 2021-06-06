@@ -1,101 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="assignment_1.css" />
+    <link rel="stylesheet" href="assign_1.css" />
     <title>Assignment</title>
-  </head>
-  <body>
+    {% load render_partial %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/assignment_1.css' %}">
+</head>
+
+<body>
     <div class="container-fluid">
-      <h1>AXSOS ACADEMY</h1>
-      <nav class="navbar navbar-default">
-        <div>
-          <ul class="nav nav-tabs nav-justified" role="tablist">
-            <li><a href="home.html">To Do</a></li>
-            <li><a href="#">Assignment</a></li>
-            <li><a href="#">Request</a></li>
-          </ul>
+        {% render_partial 'header' %}
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <form action="/students/{{student_id}}/selected_assignment" method="POST" >
+                    {% csrf_token %}
+                    <label for="day">Day</label>
+                    <select class="form-control" name="day" id="day" class="nav navbar-nav nav-pills">
+                        {% for day in stack_days %}
+                            <option value="{{ day.name }}"> {{ day.name }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if current_user.role.id == 1 %}
+                        <p class="paro">Section : {{section.name}}</p>
+                        <label for="stack">Stack</label>
+                        <select class="form-control" name="stack" id="stack">
+                            {% for stack in stacks %}
+                                <option value="{{ stack.name }}"> {{ stack.name }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <p class="para"> Section: {{ request.session.section }}</p>
+                        <p class="para"> Stack: {{ request.session.stack }}</p>
+                    {% endif %}
+                    <p>
+                        <button type="submit" class="btn btn-success btn-lg">Submit</button>
+                    </p>
+                </form>
+            </div>
+        </nav>
+        <div class="row">
+            {% render_partial 'sidebar' %}
+            {% for assignment, userAssignment in assignment_dict.items %}
+                <div class="col-sm-5">
+                    <h3 class="header">Assignment: {{assignment.name}}</h3>
+                    {% if current_user.role.id == 1 %}
+                        <form action="/students/{{student_id}}/assignment_review" method="POST">
+                            {% csrf_token %}
+                            <label for="hardness">Hardness: </label>
+                            <select class="form-control" id="hardness" name="hardness" aria-label="Default select example">
+                                <option value="2">Easy</option>
+                                <option value="5">Normal</option>
+                                <option value="8">Difficult</option>
+                            </select>
+
+                            <p>Do You Need A Breakout-Session?</p>
+
+                            <input type="radio" id="yes" name="breakout" value="yes" />
+                            <label for="yes">Yes</label><br />
+                            <input type="radio" id="no" name="breakout" value="no" />
+                            <label for="no">No</label><br />
+                            <h3>Struggling In:</h3>
+                            <textarea name="comment" id="" cols="60" rows="3">{{userAssignment.comment}}</textarea>
+                            <p>
+                                <label for="status">Solved: </label>
+                                {% if userAssignment.is_solved %}
+                                    <input type="checkbox" id='status' name="is_solved" checked>
+                                {% else %}
+                                    <input type="checkbox" id='status' name="is_solved" >
+                                {% endif %}
+                                <input type="hidden" name="assignment_id" value="{{assignment.id}}">
+                            </p>
+                            <p>
+                                <button type="submit" class="btn btn-success btn-lg">Submit</button>
+                            </p>
+                        </form>
+                    {% else %}
+                        
+                        <label for="hardness">Hardness: </label>
+                        <p>{{userAssignment.hardness}}</p>
+                        <h3>Struggling In:</h3>
+                        <p>{{userAssignment.comment}}</p>
+                        <p>
+                            <label for="status">Solved: </label>
+                            {% if userAssignment.UserAssignment.is_solved %}
+                                <p>Solved</p>
+                            {% else %}
+                                <p>Not Solved</p>
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                </div>
+                <div class="col-sm-4">
+                    {% if current_user.role.id == 1 %}
+                        <h2 class="">Code Review:</h2>
+                        <p>{{userAssignment.code_review}}</p>
+                        <p>Done by:</p>
+                    {% endif %}
+
+                    {% if current_user.role.id == 2 %}
+                        <form action="/students/{{student_id}}/assignment_review" method="POST">
+                            {% csrf_token %}
+                            <h2 >Code Review:</h2>
+                            <input type="text" name="code_review" value="{{userAssignment.code_review}}">
+                            <hr>
+                            <input type="hidden" name="assignment_id" value="{{assignment.id}}">
+                            <p>
+                                <button type="submit" class="btn btn-success btn-lg">Submit</button>
+                            </p>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
         </div>
-      </nav>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="profile">
-            <h3>Name:</h3>
-            <h3>ID:</h3>
-            <h3>Mobile:</h3>
-            <button><a href="#">Update Info</a></button>
-          </div>
-          <div class="activity">
-            <p>Section:</p>
-            <p>Attendance:</p>
-            <p>Lates:</p>
-            <p>Points:</p>
-          </div>
-        </div>
-        <div class="col-sm-5">
-          <div class="col-sm-5">
-            <form action="" method="POST">
-
-              <label for="day">Day</label>
-              <select class="form-control" name="day" id="day">
-                  <option selected>Day</option>
-                  <option value="one">1</option>
-                  <option value="two">2</option>
-                  <option value="three">3</option>
-                  <option value="four">4</option>
-              </select>
-
-              <p class="para">Section :_________</p>
-              <label for="stack">Stack</label>
-              <select class="form-control" name="stack" id="stack">
-                  <option selected>Stack</option>
-                  <option value="web-funds">web-funds</option>
-                  <option value="python">python2</option>
-                  <option value="java">java</option>
-                  <option value="mern">mern</option>
-              </select>
-              <p class="paro">Instructor:_________</p>
-              <h3 class="header">Assignment:</h3>
-
-              <label for="hardness">Hardness: </label>
-              <select class="form-control" id="hardness" name="hardness" aria-label="Default select example">
-                  <option value="easy">Easy</option>
-                  <option value="normal">Normal</option>
-                  <option value="difficult">Difficult</option>
-              </select>
-
-              <p>Do You Need A Breakout-Session?</p>
-
-              <input type="radio" id="yes" name="breakout" value="yes" />
-              <label for="yes">Yes</label><br />
-              <input type="radio" id="no" name="breakout" value="no" />
-              <label for="no">No</label><br />
-              <h3>Struggling In:</h3>
-              <textarea name="" id="" cols="60" rows="3"></textarea>
-              <p>
-                  <label for="status">Solved: </label>
-                  <input type="checkbox" name="status" id="status">
-              </p>
-              <p>
-                  <button type="submit" class="btn btn-success btn-lg">Submit</button>
-              </p>
-          </form>
-          </div>
-        <div class="col-sm-4">
-            <h2 class="sameer">Code Review:</h2>
-            <p></p>
-            <p>Done by:</p>
-            <button><a href="#">Log out</a></button>
-        </div>
-      </div>
     </div>
-  </body>
+
+    <!-- <footer class="bg-light text-center text-lg-start">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Footer text</h5>
+                </div>
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Footer text</h5>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright:
+            <a class="text-dark" href="https://academy.axsos.ps/">Academy.axsos.ps</a>
+        </div>
+
+    </footer> -->
+
+</body>
+
 </html>

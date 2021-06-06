@@ -104,11 +104,12 @@ def create_instructor(postData):
 def get_user_details(email):
     try :
         user = User.objects.get(email=email)
-        user.role.id
         if user.role.id == 1:
             role = 'student'
+            
         elif user.role.id == 2:
             role = 'instructor'
+            
 
         user_details = {
             'id': user.id,

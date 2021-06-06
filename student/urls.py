@@ -13,8 +13,8 @@ urlpatterns = [
     path('create_event',views.create_brackout),
     path('delete_request/<int:id>',views.delete_user_request),
     path('<int:student_id>/assignments',views.assignment),
-    path('selected_assignment',views.selected_assignment),
-    path('assignment_review',views.assignment_review),
+    path('<int:student_id>/selected_assignment',views.selected_assignment),
+    path('<int:student_id>/assignment_review',views.assignment_review),
     path('students_progress',views.students_progress),
     path('choose_students',views.choose_students),
 
@@ -23,5 +23,5 @@ urlpatterns = [
 
     # path('<int:id>/edit', views.edit),
     url('header', views.header, name='header'),
-    # url('sidebar', views.sidebar, name='sidebar'),
+    url('sidebar', views.sidebar, name='sidebar'),
 ]
