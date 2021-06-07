@@ -40,6 +40,13 @@
                     <div id="student" class="tab-pane fade in active">
                         <form class="form-horizontal" action="/login/create_student" method="POST">
                             {% csrf_token %}
+                            {% if messages %}
+                                {% if request.session.error == 'registration' %}
+                                    {% for message in messages %}
+                                        <p>{{message}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
                             <div class="form-group">
                                 <label class="control-label col-sm-4" for="first_name">First Name:</label>
                                 <div class="col-sm-7">
@@ -83,7 +90,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-success btn-lg">
+                                    <button type="submit" class="btn btn-success btn-lg login-btn">
                                         Register
                                     </button>
                                 </div>
@@ -143,8 +150,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        Submit
+                                    <button  type="submit" class="btn btn-success btn-lg login-btn">
+                                        Register
                                     </button>
                                 </div>
                             </div>
@@ -156,6 +163,13 @@
                 <h1>Login</h1>
                 <form class="form-horizontal" action="/login/logging" method="POST">
                     {% csrf_token %}
+                    {% if messages %}
+                        {% if request.session.error == 'login' %}
+                            {% for message in messages %}
+                                <p>{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="email_id">Email:</label>
                         <div class="col-sm-7">
@@ -180,7 +194,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-success btn-lg">
+                            <button type="submit" class="btn btn-success btn-lg login-btn">
                                 Login
                             </button>
                         </div>

@@ -18,11 +18,13 @@ def create_student(request):
         if len(errors) > 0 :
             for key, value in errors.items():
                 messages.error(request, value)
+            request.session['error'] = 'registration'
             return redirect('/')
         else :
             print('creating')
             student = models.create_student(request.POST)
             request.session['id'] = student.id
+            messages.success(request, "Registered successfully")
             return redirect('/')
     return redirect('/')
 
@@ -40,11 +42,15 @@ def create_instructor(request):
                 print('errors')
                 for key, value in errors.items():
                     messages.error(request, value)
+                request.session['error'] = 'registration'
                 return redirect('/')
             else :
                 instructor = models.create_instructor(request.POST)
                 request.session['id'] = instructor.id
+                messages.success(request, "Registered successfully")
                 return redirect('/')
+        else:
+            messages.error(request, 'Wrong Code')
     return redirect('/')
             
 def logging_in(request):
@@ -53,6 +59,7 @@ def logging_in(request):
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
+            request.session['error'] = 'login'
             return redirect('/')
         else:
             user_details = models.get_user_details(request.POST['email'])

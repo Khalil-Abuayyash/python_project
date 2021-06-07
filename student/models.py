@@ -40,7 +40,7 @@ class Class(models.Model):
     stack = models.ForeignKey(Stack, on_delete=CASCADE)
     section = models.ForeignKey(Section, on_delete=CASCADE)
     users = models.ManyToManyField(User, related_name='classes')
-    progress = models.CharField(max_length=255)
+    progress = models.CharField(max_length=255, default='on pace')
     created_at = models.DateTimeField(auto_now_add=True, )
     updated_at = models.DateTimeField(auto_now=True, )
 

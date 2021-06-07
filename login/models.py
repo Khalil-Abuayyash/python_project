@@ -42,7 +42,8 @@ class UserManger(models.Manager):
         
         # if postData['password'] != postData['confirm_password']:
         #     errors['password'] = 'password and coonfirm password are not the same'
-
+        # if len(errors) > 0:
+        #     errors['registeration'] = 'registeration'
         return errors
     def validator_login(self, postData):
         errors = {}
@@ -56,6 +57,8 @@ class UserManger(models.Manager):
 
         except:
             errors['existed_email'] = f"{postData['email']} is not registered"
+        # if len(errors) > 0:
+        #     errors['login'] = 'login'
         return errors
 
 class User(models.Model):

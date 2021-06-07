@@ -21,12 +21,15 @@ def sidebar(request):
     }
     return render(request, 'sidebar.html', context)
 
+
 # def edit(request, id):
 #     return render(request, 'edit_profile.html')
 
 #************************************************************************************************
 # Home page - to do page
 def to_do(request):
+    if 'id' not in request.session:
+        return redirect('/')
     try :
         today = Day.objects.get(date=datetime.today()) 
     except:
@@ -46,6 +49,8 @@ def to_do(request):
     return render(request,"home.html",context)
 
 def show_update_user(request, student_id):
+    if 'id' not in request.session:
+        return redirect('/')
     context = {
         'user' : User.objects.get(id=student_id)
     }
@@ -62,18 +67,22 @@ def update_user_info(request, student_id):
                 pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
                 update_user(request.POST, student_id, password=pw_hash)
         return redirect(f'/students/{student_id}/edit_profile')
-
+    return redirect("/students/todo")
 
 
 def choose_event(request):
-    event_id = request.POST["event_id"]
-    choose_events(request.session["id"],event_id)
+    if request.method == 'POST':
+        event_id = request.POST["event_id"]
+        choose_events(request.session["id"],event_id)
+        return redirect("/students/todo")
     return redirect("/students/todo")
 
 #************************************************************************************************
 # Home page - request page
 
 def brackout_session(request):
+    if 'id' not in request.session:
+        return redirect('/')
     context = {
         "user": User.objects.get(id=request.session["id"]),
         "requests":Request.objects.all(),
@@ -85,10 +94,14 @@ def brackout_session(request):
 
 # the below 2 function is for the students to request an event and vote for one
 def request_breakout(request):
-    create_request(request.POST,request.session["id"])
-    return redirect("/students/requests")
+    if request.method == 'POST':
+        create_request(request.POST,request.session["id"])
+        return redirect("/students/requests")
+    return redirect("/students/todo")
 
 def vote(request, request_id):
+    if 'id' not in request.session:
+        return redirect('/')
     selected_request = Request.objects.get(id=request_id)
     selected_request.votes += 1
     selected_request.save() 
@@ -96,10 +109,14 @@ def vote(request, request_id):
 
 # the below 2 function is for the intructor to create an event and delete a request 
 def create_breakout(request):
-    create_Event(request.POST,request.session["id"])
-    return redirect("/students/requests")
+    if request.method == 'POST':
+        create_Event(request.POST,request.session["id"])
+        return redirect("/students/requests")
+    return redirect("/students/todo")
 
 def delete_user_request(request,id):
+    if 'id' not in request.session:
+        return redirect('/')
     delete_request(id)
     return redirect("/students/requests")
 
@@ -107,6 +124,8 @@ def delete_user_request(request,id):
 # Home page - assignment page
 #the below 3 function is for the user to display their assigments and rate them
 def assignment(request,student_id):
+    if 'id' not in request.session:
+        return redirect('/')
     request.session["student_id"] = student_id
     try :
         day = Day.objects.get(date=datetime.today())
@@ -121,14 +140,24 @@ def assignment(request,student_id):
         stack = day.stack
         
     user = User.objects.get(id=student_id)
-    c = Class.objects.get(users=user,stack=stack)
+    section = Section.objects.last()
+    try :
+        c = Class.objects.get(users=user,stack=stack)
+    except:
+        c = Class.objects.create(stack=stack,section=section)
+        c.users.add(user)
     section = c.section # it will be one section can i reach it without all()
     # selected_satck = Stack.objects.get(name=request.session["selected_stack"])
     # selected_assignment = Assignment.objects.get(name=request.POST["assignment"])
     assignments =  day.assignments.all()
     assignment_dict={}
-    for assignment in assignments:
-        assignment_dict[assignment] = UserAssignment.objects.get(user=user, assignment=assignment)
+    try :
+        for assignment in assignments:
+            assignment_dict[assignment] = UserAssignment.objects.get(user=user, assignment=assignment)
+    except:
+        for assignment in assignments:
+            assignment_dict[assignment] = 0
+    
 
     context = {
         'selected_day': day,
@@ -153,6 +182,8 @@ def assignment(request,student_id):
     return render(request,"assignment.html",context)
 
 def selected_assignment(request, student_id):# we might use ajax for this
+    if 'id' not in request.session:
+        return redirect('/')
     if 'selected_stack' in request.session:
         request.session["selected_stack"] = request.POST["stack"]
     # if request.session['role'] == 'instructor':
@@ -163,11 +194,15 @@ def selected_assignment(request, student_id):# we might use ajax for this
 
 
 def assignment_review(request, student_id):
-    create_userAssignment(request.POST, student_id)
-    return redirect(f"/students/{student_id}/assignments")
+    if request.method == 'POST':
+        create_userAssignment(request.POST, student_id)
+        return redirect(f"/students/{student_id}/assignments")
+    return redirect("/students/todo")
 
 #the below 3 function is for the instructer to display students assignments
 def students_progress(request):
+    if 'id' not in request.session:
+        return redirect('/')
     if 'stack_id' in request.session and 'section_id' in request.session:
         selected_students = student_list(request.session["stack_id"],request.session["section_id"])
     else:
@@ -181,10 +216,12 @@ def students_progress(request):
     return render(request,"students_progress.html",context)
 
 def choose_students(request):
-    request.session["stack_id"] = request.POST["stack_id"]
-    request.session["section_id"] = request.POST["section_id"]
-    # student_list(request.POST["stack"],request.POST["section"])
-    return redirect ("/students")
+    if request.method == 'POST':
+        request.session["stack_id"] = request.POST["stack_id"]
+        request.session["section_id"] = request.POST["section_id"]
+        # student_list(request.POST["stack"],request.POST["section"])
+    return redirect("/students/todo")
+    
 
 
 
