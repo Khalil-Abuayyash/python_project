@@ -116,6 +116,13 @@
                         <form action="/students/{{student_id}}/assignment_review" method="POST">
                             {% csrf_token %}
                             <h2 >Code Review:</h2>
+                            {% if messages %}
+                                {% if request.session.assignment_id %}
+                                    {% for message in messages %}
+                                        <p>{{message}}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
                             <input type="text" name="code_review" value="{{userAssignment.code_review}}">
                             <hr>
                             <input type="hidden" name="assignment_id" value="{{assignment.id}}">

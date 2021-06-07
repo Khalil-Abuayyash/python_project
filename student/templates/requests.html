@@ -31,8 +31,10 @@
             <p>{{req.desc}}</p>
             <div class="vote">
               <h4>Votes: {{req.votes}}</h4>
-              <a href="/students/{{req.id}}/vote"><button type="submit" class="btn btn-success btn-lg">Vote</button></a>
-            </div>
+              {% if request.session.role == 'student' %}
+                <a href="/students/{{req.id}}/vote"><button type="submit" class="btn btn-success btn-lg">Vote</button></a>
+              {% endif %}
+              </div>
               
           </div>
         {% endfor %}

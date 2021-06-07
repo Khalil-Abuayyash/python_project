@@ -4,6 +4,9 @@ from login.models import *
 import bcrypt
 from django.contrib import messages
 from datetime import datetime
+from django.contrib import messages
+import json
+from django.http import Http404, HttpResponse
 
 # # Create your views here.
 # def index(request):
@@ -195,7 +198,13 @@ def selected_assignment(request, student_id):# we might use ajax for this
 
 def assignment_review(request, student_id):
     if request.method == 'POST':
-        create_userAssignment(request.POST, student_id)
+        errors = create_userAssignment(request.POST, student_id)
+        request.session['assignment_id'] = request.POST['assignment_id']
+        if len(errors) > 0 :
+            for key,value in errors.items():
+                messages.error(request, value)
+        else:
+            messages.success(request, "Code Review has been submitted successfully")
         return redirect(f"/students/{student_id}/assignments")
     return redirect("/students/todo")
 
@@ -220,9 +229,16 @@ def choose_students(request):
         request.session["stack_id"] = request.POST["stack_id"]
         request.session["section_id"] = request.POST["section_id"]
         # student_list(request.POST["stack"],request.POST["section"])
+        return redirect('/students')
     return redirect("/students/todo")
     
-
+def vote_ajax(request):
+    if request.is_ajax():
+        khalil = ['khalil', 'abuayyash']
+        data = json.dumps(khalil)
+        return HttpResponse(data, content_type='application/json')
+    else:
+        raise Http404
 
 
 

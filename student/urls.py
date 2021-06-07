@@ -25,4 +25,5 @@ urlpatterns = [
     url('header', views.header, name='header'),
     url('sidebar', views.sidebar, name='sidebar'),
     url('footer', views.footer, name='footer'),
+    url('ajax/vote', views.vote_ajax)
 ]

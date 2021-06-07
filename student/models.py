@@ -135,9 +135,16 @@ def create_userAssignment(data,user_id):
     user = User.objects.get(id=user_id)
     assignment = Assignment.objects.get(id=data['assignment_id'])
     if "code_review" in data:
-        user_assignment = UserAssignment.objects.get(assignment=assignment, user=user)
-        user_assignment.code_review = data["code_review"]
-        user_assignment.save()
+        try:
+            user_assignment = UserAssignment.objects.get(assignment=assignment, user=user)
+            if user_assignment.is_solved == True:
+                user_assignment.code_review = data["code_review"]
+                user_assignment.save()
+                return {}
+            else:
+                return {'not_solved': "The assignment hasn't been solved yet"}
+        except:
+            return {'not_submitted': "The assignment hasn't been submitted yet"}
     else:
 
         try :
@@ -162,6 +169,7 @@ def create_userAssignment(data,user_id):
                                     assignment=assignment,user=user,hardness=data["hardness"],
                                     comment=data["comment"], is_solved=False
                                     )
+        return {}
 
 def student_list(stack_id,section_id):
     section = Section.objects.get(id=section_id)
